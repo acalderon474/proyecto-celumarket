@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core'; // <-- Agregamos OnInit aquí
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 
@@ -9,14 +9,16 @@ import { Product } from '../../models/product.model';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
+  // Inyección moderna de servicios
+  private productService = inject(ProductService);
+  
+  // Lista de productos para la vista
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
-
   ngOnInit(): void {
+    // Nos suscribimos para obtener solo los destacados al cargar la página
     this.productService.getFeaturedProducts().subscribe(data => {
       this.products = data;
-      console.log(this.products);
     });
   }
 }
