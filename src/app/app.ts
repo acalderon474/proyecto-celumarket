@@ -13,12 +13,7 @@ import { Footer } from './components/footer/footer';
   // Aquí registramos los elementos que este componente raíz utilizará.
   // RouterOutlet permite cargar las vistas según la ruta actual.
   // Header y Footer se integran de forma global.
-  imports: [
-    RouterOutlet,
-    Header,
-    Footer
-  ],
-
+  imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
