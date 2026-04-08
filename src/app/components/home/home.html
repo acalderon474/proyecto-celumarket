@@ -1,1 +1,302 @@
-<p>home works!</p>
+<!-- 
+  Contenedor principal de toda la página Home.
+  Agrupa todas las secciones visibles de la pantalla de inicio.
+-->
+<section class="home-page">
+
+  <!-- 
+    Sección Hero principal.
+    Es la primera parte visual de la Home y presenta el mensaje principal del sitio.
+  -->
+  <section class="home-hero">
+    <div class="home-hero__content">
+
+      <!-- 
+        Bloque de texto del Hero.
+        Contiene nombre del proyecto, título, descripción y botones de acción.
+      -->
+      <div class="home-hero__text">
+
+        <!-- Nombre o etiqueta superior de la marca -->
+        <p class="home-hero__eyebrow">CeluMarket</p>
+
+        <!-- 
+          Título principal de la Home.
+          Se divide en varias líneas con <br /> para mejorar el diseño visual.
+        -->
+        <h1 class="home-hero__title">
+          Encuentra el <br />
+          Smartphone <br />
+          Perfecto
+        </h1>
+
+        <!-- 
+          Descripción breve del valor principal del sitio.
+        -->
+        <p class="home-hero__description">
+          Explora nuestra selección de los mejores smartphones del momento.
+          Calidad garantizada y los mejores precios.
+        </p>
+
+        <!-- 
+          Acciones principales del Hero.
+          Incluye acceso al catálogo y a la sección de contacto.
+        -->
+        <div class="home-hero__actions">
+          <a class="home-button home-button--light" routerLink="/catalog">
+            Ver Catálogo
+          </a>
+
+          <a class="home-button home-button--ghost" routerLink="/contact">
+            Contactar
+          </a>
+        </div>
+      </div>
+
+      <!-- 
+        Parte visual decorativa del Hero.
+        No aporta contenido semántico, por eso se marca con aria-hidden="true".
+      -->
+      <div class="home-hero__visual" aria-hidden="true">
+        <div class="home-hero__phone">
+          <div class="home-hero__phone-inner"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+    Sección de marcas destacadas.
+    Muestra las marcas principales disponibles en el catálogo.
+  -->
+  <section class="home-section home-section--brands">
+    <div class="home-section__header home-section__header--center">
+      <h2 class="home-section__title">Nuestras Marcas</h2>
+    </div>
+
+    <!-- 
+      Contenedor de chips o botones de marcas.
+      Recorre dinámicamente el arreglo brands.
+    -->
+    <div class="home-brands">
+      @for (brand of brands; track brand.name) {
+        <a
+          class="home-brand-chip"
+          [class.home-brand-chip--samsung]="brand.cssClass === 'samsung'"
+          [class.home-brand-chip--iphone]="brand.cssClass === 'iphone'"
+          [class.home-brand-chip--motorola]="brand.cssClass === 'motorola'"
+          [class.home-brand-chip--xiaomi]="brand.cssClass === 'xiaomi'"
+          [routerLink]="['/catalog']"
+        >
+          <!-- Nombre visible de la marca -->
+          {{ brand.name }}
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- 
+    Sección de beneficios destacados.
+    Muestra ventajas comerciales del sitio como garantía, envío y precio.
+  -->
+  <section class="home-section">
+    <div class="home-benefits">
+
+      <!-- 
+        Recorre dinámicamente el arreglo benefits
+        para mostrar cada tarjeta de beneficio.
+      -->
+      @for (benefit of benefits; track benefit.title) {
+        <article class="home-benefit-card">
+
+          <!-- 
+            Contenedor del ícono del beneficio.
+            Cambia dinámicamente según el valor benefit.icon.
+          -->
+          <div class="home-benefit-card__icon">
+            @switch (benefit.icon) {
+
+              <!-- Ícono de garantía -->
+              @case ('shield') {
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-3z"></path>
+                  <path d="M9.5 12.5l1.5 1.5 3.5-3.5"></path>
+                </svg>
+              }
+
+              <!-- Ícono de envío -->
+              @case ('truck') {
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 7h11v8H3z"></path>
+                  <path d="M14 10h3l3 3v2h-6z"></path>
+                  <circle cx="7" cy="17" r="1.6"></circle>
+                  <circle cx="17" cy="17" r="1.6"></circle>
+                </svg>
+              }
+
+              <!-- Ícono de mejor precio o reconocimiento -->
+              @case ('badge') {
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="4"></circle>
+                  <path d="M10 12l-1 8 3-2 3 2-1-8"></path>
+                </svg>
+              }
+            }
+          </div>
+
+          <!-- Título del beneficio -->
+          <h3 class="home-benefit-card__title">{{ benefit.title }}</h3>
+
+          <!-- Descripción del beneficio -->
+          <p class="home-benefit-card__description">
+            {{ benefit.description }}
+          </p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- 
+    Sección de productos destacados.
+    Muestra una selección limitada de productos relevantes de la tienda.
+  -->
+  <section class="home-section">
+    <div class="home-section__header">
+      <div>
+        <h2 class="home-section__title">Productos Destacados</h2>
+        <p class="home-section__subtitle">
+          Los equipos más destacados del momento
+        </p>
+      </div>
+
+      <!-- Enlace para ver todos los productos del catálogo -->
+      <a class="home-section__link" routerLink="/catalog">Ver todos</a>
+    </div>
+
+    <!-- 
+      Estado de carga.
+      Se muestra mientras los productos destacados se están consultando.
+    -->
+    @if (loading()) {
+      <div class="home-state-card">
+        <p>Cargando productos destacados...</p>
+      </div>
+    }
+
+    <!-- 
+      Estado de error.
+      Se muestra si falla la carga de productos.
+    -->
+    @if (errorMessage()) {
+      <div class="home-state-card home-state-card--error">
+        <p>{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <!-- 
+      Estado correcto.
+      Solo se muestra cuando ya no está cargando y no existe error.
+    -->
+    @if (!loading() && !errorMessage()) {
+      <div class="home-products-grid">
+
+        <!-- 
+          Recorre los productos destacados y genera una tarjeta por cada producto.
+        -->
+        @for (product of featuredProducts(); track getProductId(product)) {
+          <article class="home-product-card">
+
+            <!-- 
+              Área clickeable de la imagen del producto.
+              Redirige al detalle del producto.
+            -->
+            <a
+              class="home-product-card__image-wrapper"
+              [routerLink]="['/product', getProductId(product)]"
+            >
+              <!-- Marca visible del producto -->
+              <span class="home-product-card__badge">
+                {{ getProductBrand(product) }}
+              </span>
+
+              <!-- 
+                Botón para agregar o quitar el producto de favoritos.
+                Usa preventDefault y stopPropagation desde el método para no abrir el detalle por accidente.
+              -->
+              <button
+                class="home-product-card__favorite"
+                type="button"
+                [class.active]="isFavorite(product)"
+                (click)="toggleFavorite(product, $event)"
+                aria-label="Agregar o quitar de favoritos"
+                title="Favoritos"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+                </svg>
+              </button>
+
+              <!-- Imagen principal del producto -->
+              <img
+                class="home-product-card__image"
+                [src]="getProductImage(product)"
+                [alt]="getProductName(product)"
+              />
+            </a>
+
+            <!-- 
+              Cuerpo textual de la tarjeta del producto.
+            -->
+            <div class="home-product-card__body">
+
+              <!-- Nombre del producto -->
+              <h3 class="home-product-card__title">
+                {{ getProductName(product) }}
+              </h3>
+
+              <!-- Descripción corta del producto -->
+              <p class="home-product-card__description">
+                {{ getProductShortDescription(product) }}
+              </p>
+
+              <!-- 
+                Pie de la tarjeta.
+                Muestra precio y botón de acceso al detalle.
+              -->
+              <div class="home-product-card__footer">
+                <span class="home-product-card__price">
+                  {{ formatPrice(getProductPrice(product)) }}
+                </span>
+
+                <a
+                  class="home-product-card__button"
+                  [routerLink]="['/product', getProductId(product)]"
+                >
+                  Ver más
+                </a>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- 
+    Franja final de ayuda.
+    Funciona como llamado a la acción para contactar asesoría.
+  -->
+  <section class="home-help-banner">
+    <div class="home-help-banner__content">
+      <h2 class="home-help-banner__title">¿Necesitas ayuda para elegir?</h2>
+
+      <p class="home-help-banner__description">
+        Podemos ayudarte a encontrar el celular ideal según tu presupuesto y tus necesidades.
+      </p>
+
+      <a class="home-help-banner__button" routerLink="/contact">
+        Contáctanos Ahora
+      </a>
+    </div>
+  </section>
+</section>

@@ -1,222 +1,295 @@
+/* 
+  :host representa el componente actual en Angular.
+  Hace que el footer se comporte como un bloque dentro de la página.
+*/
 :host {
   display: block;
 }
 
-/* Fondo principal del footer */
+/* 
+  Fondo principal del footer.
+  Define el color de fondo oscuro y el color base del texto.
+*/
 .cm-footer {
-  background: #0b132b;
-  color: #cbd5e1;
-  margin-top: 0;
+  background: #0b132b; /* Fondo azul oscuro */
+  color: #cbd5e1;      /* Color base de texto claro */
+  margin-top: 0;       /* Sin separación superior extra */
 }
 
-/* Contenedor general */
+/* 
+  Contenedor general del footer.
+  Organiza las columnas principales usando CSS Grid.
+*/
 .cm-footer__container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 1.5rem;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.15fr;
-  gap: 2rem;
+  max-width: 1240px; /* Ancho máximo del contenido */
+  margin: 0 auto;    /* Centra el contenedor horizontalmente */
+  padding: 2rem 1.5rem 1.5rem; /* Espaciado interno */
+  display: grid; /* Activa el sistema de rejilla */
+  grid-template-columns: 1.5fr 1fr 1fr 1.15fr; /* Distribución de columnas */
+  gap: 2rem; /* Espacio entre columnas */
 }
 
 /* Marca */
 .cm-footer__brand-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  text-decoration: none;
-  margin-bottom: 0.9rem;
+  display: inline-flex; /* Coloca logo y nombre en línea */
+  align-items: center;  /* Centra verticalmente */
+  gap: 0.7rem;          /* Espacio entre logo y texto */
+  text-decoration: none; /* Quita subrayado del enlace */
+  margin-bottom: 0.9rem; /* Separación inferior */
 }
 
+/* 
+  Caja visual del logo de la marca.
+  Usa un gradiente para reforzar la identidad visual.
+*/
 .cm-footer__brand-logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6 0%, #4f5cf0 45%, #7c3aed 100%);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 34px;   /* Ancho del logo */
+  height: 34px;  /* Alto del logo */
+  border-radius: 10px; /* Bordes redondeados */
+  background: linear-gradient(135deg, #3b82f6 0%, #4f5cf0 45%, #7c3aed 100%); /* Fondo degradado */
+  display: inline-flex; /* Permite centrar el contenido */
+  align-items: center;  /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  flex-shrink: 0; /* Evita que se encoja */
 }
 
+/* 
+  Estilo del SVG dentro del logo.
+*/
 .cm-footer__brand-logo svg {
-  width: 17px;
-  height: 17px;
-  stroke: #ffffff;
-  fill: none;
-  stroke-width: 1.9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 17px;   /* Ancho del ícono */
+  height: 17px;  /* Alto del ícono */
+  stroke: #ffffff; /* Color del trazo */
+  fill: none;      /* Sin relleno */
+  stroke-width: 1.9; /* Grosor del trazo */
+  stroke-linecap: round; /* Extremos redondeados */
+  stroke-linejoin: round; /* Uniones redondeadas */
 }
 
+/* 
+  Nombre de la marca.
+  Usa un degradado aplicado al texto.
+*/
 .cm-footer__brand-name {
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1;
-  background: linear-gradient(90deg, #60a5fa 0%, #6366f1 45%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  font-size: 1rem; /* Tamaño del texto */
+  font-weight: 800; /* Grosor fuerte */
+  line-height: 1; /* Altura de línea compacta */
+  background: linear-gradient(90deg, #60a5fa 0%, #6366f1 45%, #8b5cf6 100%); /* Degradado del texto */
+  -webkit-background-clip: text; /* Recorta el fondo al texto en navegadores webkit */
+  -webkit-text-fill-color: transparent; /* Hace transparente el color de relleno del texto */
+  background-clip: text; /* Recorta el fondo al texto */
+  color: transparent; /* Hace visible solo el degradado */
 }
 
+/* 
+  Descripción de la marca o del sitio.
+*/
 .cm-footer__description {
-  max-width: 250px;
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: #94a3b8;
+  max-width: 250px; /* Limita el ancho del texto */
+  margin: 0; /* Quita márgenes por defecto */
+  font-size: 0.92rem; /* Tamaño de fuente */
+  line-height: 1.65; /* Espaciado entre líneas */
+  color: #94a3b8; /* Tono gris azulado */
 }
 
 /* Títulos de columna */
 .cm-footer__title {
-  margin: 0 0 0.95rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
+  margin: 0 0 0.95rem; /* Espacio inferior */
+  font-size: 0.95rem; /* Tamaño del título */
+  font-weight: 700; /* Negrita */
+  color: #ffffff; /* Color blanco */
 }
 
 /* Enlaces */
 .cm-footer__links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+  display: flex; /* Organiza los enlaces con Flexbox */
+  flex-direction: column; /* Los coloca en columna */
+  gap: 0.65rem; /* Espacio entre enlaces */
 }
 
+/* 
+  Estilo base de los enlaces del footer.
+*/
 .cm-footer__link {
-  text-decoration: none;
-  color: #94a3b8;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
+  text-decoration: none; /* Sin subrayado */
+  color: #94a3b8; /* Color base */
+  font-size: 0.9rem; /* Tamaño del texto */
+  transition: color 0.2s ease; /* Transición suave al pasar el mouse */
 }
 
+/* 
+  Efecto hover de los enlaces.
+*/
 .cm-footer__link:hover {
-  color: #ffffff;
+  color: #ffffff; /* Cambia a blanco al pasar el cursor */
 }
 
 /* Lista de marcas */
 .cm-footer__list,
 .cm-footer__contact-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none; /* Quita viñetas */
+  padding: 0; /* Quita padding por defecto */
+  margin: 0; /* Quita margen por defecto */
 }
 
+/* 
+  Lista general de marcas o elementos.
+*/
 .cm-footer__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+  display: flex; /* Usa flexbox */
+  flex-direction: column; /* Coloca los elementos en columna */
+  gap: 0.65rem; /* Espacio entre elementos */
 }
 
+/* 
+  Cada elemento de la lista.
+*/
 .cm-footer__list-item {
-  font-size: 0.9rem;
-  color: #94a3b8;
+  font-size: 0.9rem; /* Tamaño del texto */
+  color: #94a3b8; /* Color gris azulado */
 }
 
 /* Contacto */
 .cm-footer__contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+  display: flex; /* Usa flexbox */
+  flex-direction: column; /* Coloca los elementos en columna */
+  gap: 0.8rem; /* Espacio entre ítems */
 }
 
+/* 
+  Cada ítem de contacto.
+  Alinea ícono y texto horizontalmente.
+*/
 .cm-footer__contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.9rem;
-  color: #94a3b8;
+  display: flex; /* Ícono y texto en línea */
+  align-items: center; /* Centrado vertical */
+  gap: 0.6rem; /* Espacio entre ícono y texto */
+  font-size: 0.9rem; /* Tamaño del texto */
+  color: #94a3b8; /* Color del texto */
 }
 
+/* 
+  Contenedor del ícono de contacto.
+*/
 .cm-footer__contact-icon {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 18px; /* Ancho del contenedor */
+  height: 18px; /* Alto del contenedor */
+  display: inline-flex; /* Permite centrar el SVG */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  flex-shrink: 0; /* Evita que se reduzca */
 }
 
+/* 
+  Estilo del SVG dentro del ícono de contacto.
+*/
 .cm-footer__contact-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: #94a3b8;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 16px; /* Ancho del SVG */
+  height: 16px; /* Alto del SVG */
+  stroke: #94a3b8; /* Color del trazo */
+  fill: none; /* Sin relleno */
+  stroke-width: 1.8; /* Grosor del trazo */
+  stroke-linecap: round; /* Extremos redondeados */
+  stroke-linejoin: round; /* Uniones redondeadas */
 }
 
 /* Redes */
 .cm-footer__socials {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-top: 1rem;
+  display: flex; /* Coloca redes sociales en línea */
+  align-items: center; /* Centrado vertical */
+  gap: 0.65rem; /* Espacio entre íconos */
+  margin-top: 1rem; /* Separación superior */
 }
 
+/* 
+  Cada botón o enlace de red social.
+*/
 .cm-footer__social-link {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease;
+  width: 32px; /* Ancho */
+  height: 32px; /* Alto */
+  border-radius: 999px; /* Forma circular */
+  background: rgba(255, 255, 255, 0.05); /* Fondo semitransparente */
+  display: inline-flex; /* Permite centrar el contenido */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  transition: background 0.2s ease, transform 0.2s ease; /* Transiciones suaves */
 }
 
+/* 
+  Efecto hover de los íconos sociales.
+*/
 .cm-footer__social-link:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12); /* Aumenta el contraste del fondo */
+  transform: translateY(-1px); /* Eleva ligeramente el botón */
 }
 
+/* 
+  Estilo del SVG de las redes sociales.
+*/
 .cm-footer__social-link svg {
-  width: 16px;
-  height: 16px;
-  stroke: #cbd5e1;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 16px; /* Ancho del ícono */
+  height: 16px; /* Alto del ícono */
+  stroke: #cbd5e1; /* Color del trazo */
+  fill: none; /* Sin relleno */
+  stroke-width: 1.8; /* Grosor del trazo */
+  stroke-linecap: round; /* Extremos redondeados */
+  stroke-linejoin: round; /* Uniones redondeadas */
 }
 
 /* Franja inferior */
 .cm-footer__bottom {
-  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  border-top: 1px solid rgba(148, 163, 184, 0.18); /* Línea divisoria superior */
 }
 
+/* 
+  Contenedor interno de la franja inferior.
+*/
 .cm-footer__bottom-container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0.95rem 1.5rem 1.1rem;
+  max-width: 1240px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 0.95rem 1.5rem 1.1rem; /* Espaciado interno */
 }
 
+/* 
+  Texto de derechos de autor.
+*/
 .cm-footer__copyright {
-  margin: 0;
-  text-align: center;
-  font-size: 0.82rem;
-  color: #64748b;
+  margin: 0; /* Sin margen */
+  text-align: center; /* Texto centrado */
+  font-size: 0.82rem; /* Tamaño pequeño */
+  color: #64748b; /* Color gris oscuro */
 }
 
-/* Responsive */
+/* Adaptabilidad Móvil (Responsive Design) */
 @media (max-width: 992px) {
+  /* 
+    En tablets, el footer pasa de 4 columnas a 2 columnas.
+  */
   .cm-footer__container {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 768px) {
+  /* 
+    En celulares, el footer pasa a una sola columna.
+  */
   .cm-footer__container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.7rem 1rem 1.3rem;
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 1.5rem; /* Reduce separación */
+    padding: 1.7rem 1rem 1.3rem; /* Ajusta padding para móvil */
   }
 
+  /* 
+    Ajusta el contenedor inferior en móvil.
+  */
   .cm-footer__bottom-container {
     padding: 0.9rem 1rem 1rem;
   }
 
+  /* 
+    En móvil la descripción ya no limita su ancho.
+  */
   .cm-footer__description {
     max-width: none;
   }

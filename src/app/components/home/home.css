@@ -1,0 +1,792 @@
+/* 
+  :host representa el componente actual en Angular.
+  Hace que el componente Home se comporte como un bloque.
+*/
+:host {
+  display: block;
+}
+
+/* 
+  Contenedor principal de la página Home.
+  Define ancho completo, fondo general y color base del texto.
+*/
+.home-page {
+  width: 100%;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* 
+  Estas secciones ocupan todo el ancho disponible.
+*/
+.home-section,
+.home-hero,
+.home-help-banner {
+  width: 100%;
+}
+
+/* 
+  Estructura general de cada sección interna de la Home.
+  Limita el ancho y centra el contenido.
+*/
+.home-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem 0;
+}
+
+/* Hero */
+.home-hero {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem 0;
+}
+
+/* 
+  Contenedor principal del Hero.
+  Usa grid para dividir el texto y la parte visual decorativa.
+*/
+.home-hero__content {
+  background: linear-gradient(135deg, #3b82f6 0%, #5b47f5 45%, #d946ef 100%);
+  border-radius: 0;
+  min-height: 300px;
+  padding: 2.4rem 2.6rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+}
+
+/* 
+  Texto pequeño superior del Hero, usado como etiqueta visual.
+*/
+.home-hero__eyebrow {
+  margin: 0 0 0.65rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* 
+  Título principal del Hero.
+*/
+.home-hero__title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 2.6rem;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+/* 
+  Descripción principal del Hero.
+*/
+.home-hero__description {
+  max-width: 470px;
+  margin: 1rem 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* 
+  Contenedor de botones de acción del Hero.
+*/
+.home-hero__actions {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.4rem;
+}
+
+/* 
+  Estilo base de los botones del Hero.
+*/
+.home-button {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+/* 
+  Efecto hover de los botones.
+*/
+.home-button:hover {
+  transform: translateY(-1px);
+}
+
+/* 
+  Variante clara del botón.
+*/
+.home-button--light {
+  background: #ffffff;
+  color: #4f5cf0;
+}
+
+/* 
+  Variante transparente del botón.
+*/
+.home-button--ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 
+  Bloque visual decorativo del Hero.
+*/
+.home-hero__visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 
+  Silueta principal del celular decorativo.
+*/
+.home-hero__phone {
+  width: 150px;
+  height: 190px;
+  border: 6px solid #ffffff;
+  border-radius: 26px;
+  position: relative;
+  opacity: 0.95;
+}
+
+/* 
+  Parte superior decorativa del celular.
+*/
+.home-hero__phone::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* 
+  Botón inferior decorativo del celular.
+*/
+.home-hero__phone::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+/* 
+  Pantalla interna decorativa del celular.
+*/
+.home-hero__phone-inner {
+  position: absolute;
+  inset: 14px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+}
+
+/* Encabezados de sección */
+.home-section__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 
+  Variante centrada del encabezado de sección.
+*/
+.home-section__header--center {
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* 
+  Título principal de cada sección.
+*/
+.home-section__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Subtítulo opcional de sección.
+*/
+.home-section__subtitle {
+  margin: 0.25rem 0 0;
+  color: #6b7280;
+  font-size: 0.92rem;
+}
+
+/* 
+  Enlace auxiliar de sección, por ejemplo "Ver todos".
+*/
+.home-section__link {
+  text-decoration: none;
+  color: #4f5cf0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Marcas */
+.home-brands {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* 
+  Chip visual de cada marca.
+*/
+.home-brand-chip {
+  min-height: 54px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* 
+  Variante visual para Samsung.
+*/
+.home-brand-chip--samsung {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+}
+
+/* 
+  Variante visual para iPhone.
+*/
+.home-brand-chip--iphone {
+  background: linear-gradient(135deg, #374151, #111827);
+}
+
+/* 
+  Variante visual para Motorola.
+*/
+.home-brand-chip--motorola {
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+}
+
+/* 
+  Variante visual para Xiaomi.
+*/
+.home-brand-chip--xiaomi {
+  background: linear-gradient(135deg, #f59e0b, #fb923c);
+}
+
+/* Beneficios */
+.home-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* 
+  Tarjeta individual de beneficio.
+*/
+.home-benefit-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+/* 
+  Contenedor circular del ícono del beneficio.
+*/
+.home-benefit-card__icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 0.8rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+  Ícono SVG del beneficio.
+*/
+.home-benefit-card__icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 
+  Título del beneficio.
+*/
+.home-benefit-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Descripción del beneficio.
+*/
+.home-benefit-card__description {
+  margin: 0.55rem 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Estados */
+.home-state-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.2rem;
+  color: #475569;
+}
+
+/* 
+  Variante de estado para errores.
+*/
+.home-state-card--error {
+  border-color: #fecaca;
+  background: #fff7f7;
+  color: #b91c1c;
+}
+
+/* Productos destacados */
+.home-products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* 
+  Tarjeta individual de producto destacado.
+*/
+.home-product-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  Área de imagen del producto.
+*/
+.home-product-card__image-wrapper {
+  position: relative;
+  display: block;
+  background: #f3f4f6;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* 
+  Badge superior con la marca del producto.
+*/
+.home-product-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: #ffffff;
+  color: #4f5cf0;
+  border-radius: 999px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* 
+  Botón de favoritos en la tarjeta del producto.
+*/
+.home-product-card__favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* 
+  Ícono del botón de favoritos.
+*/
+.home-product-card__favorite svg {
+  width: 17px;
+  height: 17px;
+  stroke: #64748b;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 
+  Estado activo del favorito.
+*/
+.home-product-card__favorite.active svg {
+  stroke: #7c3aed;
+  fill: rgba(124, 58, 237, 0.15);
+}
+
+/* 
+  Imagen del producto.
+*/
+.home-product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cuerpo de card */
+.home-product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.95rem;
+  flex: 1;
+}
+
+/* 
+  Título del producto.
+*/
+.home-product-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Descripción breve del producto.
+*/
+.home-product-card__description {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  min-height: 2.6rem;
+}
+
+/* 
+  Pie de la tarjeta del producto,
+  donde se ubican precio y botón.
+*/
+.home-product-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* 
+  Precio destacado del producto.
+*/
+.home-product-card__price {
+  color: #2563eb;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* 
+  Botón "Ver más" del producto.
+*/
+.home-product-card__button {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.52rem 0.8rem;
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Franja de ayuda */
+.home-help-banner {
+  max-width: 1240px;
+  margin: 1.7rem auto 0;
+  padding: 0 1.5rem;
+}
+
+/* 
+  Contenedor interno de la franja de ayuda.
+*/
+.home-help-banner__content {
+  background: linear-gradient(135deg, #3b82f6 0%, #5b47f5 45%, #a855f7 100%);
+  padding: 1.7rem 1.5rem;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* 
+  Título principal de la franja de ayuda.
+*/
+.home-help-banner__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* 
+  Texto descriptivo de la franja de ayuda.
+*/
+.home-help-banner__description {
+  max-width: 650px;
+  margin: 0.7rem auto 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* 
+  Botón principal de contacto en la franja de ayuda.
+*/
+.home-help-banner__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  text-decoration: none;
+  padding: 0.8rem 1.1rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #4f5cf0;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  /* 
+    Reduce la grilla de productos a 3 columnas
+    en pantallas medianas.
+  */
+  .home-products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  /* 
+    En tablets pequeñas, el Hero y beneficios
+    pasan a una sola columna.
+  */
+  .home-hero__content,
+  .home-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  /* 
+    Ajusta la posición del visual del Hero.
+  */
+  .home-hero__visual {
+    justify-content: flex-start;
+  }
+
+  /* 
+    Las marcas pasan a 2 columnas.
+  */
+  .home-brands {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* 
+    Los productos pasan a 2 columnas.
+  */
+  .home-products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* 
+    Reduce el padding lateral de las secciones en móvil.
+  */
+  .home-hero,
+  .home-section,
+  .home-help-banner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* 
+    Ajusta el Hero para pantallas pequeñas.
+  */
+  .home-hero__content {
+    padding: 1.5rem 1.2rem;
+    min-height: auto;
+    border-radius: 0;
+  }
+
+  /* 
+    Reduce el tamaño del título principal en móvil.
+  */
+  .home-hero__title {
+    font-size: 2rem;
+  }
+
+  /* 
+    Ajusta el tamaño del texto descriptivo en móvil.
+  */
+  .home-hero__description {
+    font-size: 0.92rem;
+  }
+
+  /* 
+    Los botones del Hero se apilan verticalmente.
+  */
+  .home-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 
+    Los botones ocupan mejor el ancho disponible.
+  */
+  .home-button {
+    text-align: center;
+  }
+
+  /* 
+    Los encabezados de sección se apilan.
+  */
+  .home-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* 
+    Beneficios, productos y marcas pasan a una sola columna.
+  */
+  .home-benefits,
+  .home-products-grid,
+  .home-brands {
+    grid-template-columns: 1fr;
+  }
+
+  /* 
+    Ajusta el contenido de la franja de ayuda en móvil.
+  */
+  .home-help-banner__content {
+    padding: 1.4rem 1rem;
+  }
+
+  /* 
+    Reduce el tamaño del título de ayuda en móvil.
+  */
+  .home-help-banner__title {
+    font-size: 1.3rem;
+  }
+  /* =========================================================
+   SECCIÓN FINAL DE AYUDA / LLAMADA A LA ACCIÓN
+   ========================================================= */
+.help-cta {
+  width: 100%;
+  padding: 5rem 1.5rem;
+  background: linear-gradient(90deg, #2f5cff 0%, #8a2be2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.help-cta__content {
+  max-width: 820px;
+}
+
+.help-cta__content h2 {
+  margin: 0 0 1rem 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.help-cta__content p {
+  margin: 0 0 2rem 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.help-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.95rem 2rem;
+  background-color: #ffffff;
+  color: #2f5cff;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.help-cta__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.help-cta__arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* =========================================================
+   RESPONSIVE PARA MOVIL
+   ========================================================= */
+@media (max-width: 768px) {
+  .help-cta {
+    padding: 4rem 1.2rem;
+  }
+
+  .help-cta__content p {
+    font-size: 1rem;
+  }
+
+  .help-cta__button {
+    padding: 0.9rem 1.6rem;
+    font-size: 0.95rem;
+  }
+}
+}
