@@ -35,7 +35,7 @@ export class Footer {
 
   // Descripción corta institucional de la marca
   brandDescription =
-    'Tu tienda de confianza para encontrar los celulares más buscados del momento.';
+    'Tu tienda de confianza para encontrar los mejores Smartphones del mercado.';
 
   // Enlaces rápidos del aplicativo
   quickLinks: FooterLink[] = [
