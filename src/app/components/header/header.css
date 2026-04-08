@@ -1,0 +1,278 @@
+/* 
+  :host representa el componente actual en Angular.
+  Se usa para que el header se comporte como un bloque
+  y permanezca visible en la parte superior al hacer scroll.
+*/
+:host {
+  display: block;      /* Hace que el componente se comporte como un elemento de bloque */
+  position: sticky;    /* Mantiene el header fijo al llegar a la parte superior */
+  top: 0;              /* Lo posiciona pegado arriba */
+  z-index: 1000;       /* Lo coloca por encima de otros elementos */
+}
+
+/* 
+  Contenedor principal de la barra del encabezado.
+  Define el ancho completo, el fondo y el borde inferior.
+*/
+.cm-header {
+  width: 100%;                     /* Ocupa todo el ancho disponible */
+  background: #ffffff;             /* Fondo blanco */
+  border-bottom: 1px solid #ececf3;/* Línea inferior sutil de separación */
+}
+
+/* 
+  Contenedor interno del header.
+  Organiza la marca, botón hamburguesa y navegación.
+*/
+.cm-header__container {
+  max-width: 1240px;         /* Limita el ancho máximo del contenido */
+  margin: 0 auto;            /* Centra el contenedor horizontalmente */
+  padding: 0.7rem 1.5rem;    /* Espaciado interno */
+  display: flex;             /* Usa Flexbox para alinear elementos */
+  align-items: center;       /* Centra verticalmente los elementos */
+  justify-content: space-between; /* Distribuye elementos entre extremos */
+  gap: 1rem;                 /* Espacio entre los elementos */
+}
+
+/* Marca */
+.cm-brand {
+  display: inline-flex;      /* Coloca logo y texto en una misma línea */
+  align-items: center;       /* Centra verticalmente */
+  gap: 0.8rem;               /* Espacio entre logo y texto */
+  text-decoration: none;     /* Quita el subrayado del enlace */
+}
+
+/* 
+  Caja visual del logo de la marca.
+  Usa gradiente y sombra para darle identidad visual.
+*/
+.cm-brand__logo {
+  width: 38px;                                      /* Ancho del logo */
+  height: 38px;                                     /* Alto del logo */
+  border-radius: 11px;                              /* Bordes redondeados */
+  background: linear-gradient(135deg, #3b82f6 0%, #4f5cf0 45%, #7c3aed 100%); /* Fondo degradado */
+  display: inline-flex;                             /* Permite centrar el contenido */
+  align-items: center;                              /* Centrado vertical */
+  justify-content: center;                          /* Centrado horizontal */
+  box-shadow: 0 6px 14px rgba(79, 92, 240, 0.22);   /* Sombra decorativa */
+  flex-shrink: 0;                                   /* Evita que el logo se encoja */
+}
+
+/* 
+  Estilo del ícono SVG dentro del logo.
+*/
+.cm-brand__logo svg {
+  width: 19px;             /* Ancho del SVG */
+  height: 19px;            /* Alto del SVG */
+  stroke: #ffffff;         /* Color del trazo */
+  fill: none;              /* Sin relleno */
+  stroke-width: 1.9;       /* Grosor del trazo */
+  stroke-linecap: round;   /* Extremos redondeados */
+  stroke-linejoin: round;  /* Uniones redondeadas */
+}
+
+/* 
+  Texto del nombre de la marca.
+*/
+.cm-brand__text {
+  display: inline-block;
+  font-size: 1.35rem;    /* Tamaño del texto */
+  font-weight: 800;      /* Negrita fuerte */        
+  line-height: 1;        /* Altura de línea compacta */
+  letter-spacing: 0;     /* Sin separación adicional entre letras */
+
+  background: linear-gradient(90deg, #3b82f6 0%, #4f5cf0 45%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Botón hamburguesa */
+.cm-menu-button {
+  display: none;           /* Se oculta por defecto en escritorio */
+  width: 40px;             /* Ancho del botón */
+  height: 40px;            /* Alto del botón */
+  border: none;            /* Sin borde */
+  background: transparent; /* Fondo transparente */
+  cursor: pointer;         /* Muestra cursor de clic */
+  padding: 0.45rem;        /* Espaciado interno */
+  flex-direction: column;  /* Apila las líneas verticalmente */
+  justify-content: center; /* Centra el contenido */
+  gap: 5px;                /* Espacio entre las líneas */
+}
+
+/* 
+  Líneas del ícono hamburguesa.
+*/
+.cm-menu-button span {
+  display: block;         /* Cada línea se comporta como bloque */
+  width: 100%;            /* Ocupa el ancho del botón */
+  height: 2px;            /* Grosor de cada línea */
+  border-radius: 10px;    /* Bordes redondeados */
+  background: #6b7280;    /* Color gris */
+}
+
+/* Navegación escritorio */
+.cm-nav {
+  display: flex;          /* Organiza los enlaces en línea */
+  align-items: center;    /* Centra verticalmente */
+  gap: 1.25rem;           /* Espacio entre enlaces */
+}
+
+/* 
+  Estilo base de cada enlace de navegación.
+*/
+.cm-nav__link {
+  display: inline-flex;   /* Permite alinear ícono y texto en línea */
+  align-items: center;    /* Centrado vertical */
+  gap: 0.42rem;           /* Espacio entre ícono y texto */
+  text-decoration: none;  /* Quita el subrayado */
+  color: #4b5563;         /* Color base del enlace */
+  font-size: 0.92rem;     /* Tamaño del texto */
+  font-weight: 500;       /* Peso medio */
+  transition: color 0.2s ease; /* Suaviza el cambio de color */
+}
+
+/* 
+  Estado hover y activo de los enlaces del menú.
+*/
+.cm-nav__link:hover,
+.cm-nav__link.active {
+  color: #4f5cf0;         /* Cambia al color principal */
+}
+
+/* 
+  Íconos SVG de la navegación.
+*/
+.cm-nav__icon {
+  width: 16px;             /* Ancho del ícono */
+  height: 16px;            /* Alto del ícono */
+  stroke: currentColor;    /* Hereda el color del enlace */
+  fill: none;              /* Sin relleno */
+  stroke-width: 1.9;       /* Grosor del trazo */
+  stroke-linecap: round;   /* Extremos redondeados */
+  stroke-linejoin: round;  /* Uniones redondeadas */
+}
+
+/* Favoritos */
+.cm-favorites {
+  width: 22px;             /* Ancho del contenedor */
+  height: 22px;            /* Alto del contenedor */
+  display: inline-flex;    /* Permite centrar el ícono */
+  align-items: center;     /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  text-decoration: none;   /* Sin subrayado */
+  color: #4b5563;          /* Color base */
+  position: relative;      /* Necesario para ubicar el contador */
+  transition: color 0.2s ease; /* Transición suave */
+}
+
+/* 
+  Estado hover y activo del botón de favoritos.
+*/
+.cm-favorites:hover,
+.cm-favorites.active {
+  color: #4f5cf0;          /* Resalta con el color principal */
+}
+
+/* 
+  Ícono SVG de favoritos.
+*/
+.cm-favorites__icon {
+  width: 17px;             /* Ancho del ícono */
+  height: 17px;            /* Alto del ícono */
+  stroke: currentColor;    /* Hereda el color del botón */
+  fill: none;              /* Sin relleno */
+  stroke-width: 1.9;       /* Grosor del trazo */
+  stroke-linecap: round;   /* Extremos redondeados */
+  stroke-linejoin: round;  /* Uniones redondeadas */
+}
+
+/* 
+  Contador de favoritos.
+  Se muestra como un badge encima del ícono.
+*/
+.cm-favorites__count {
+  position: absolute;      /* Posicionamiento relativo al botón favoritos */
+  top: -7px;               /* Lo desplaza hacia arriba */
+  right: -8px;             /* Lo desplaza hacia la derecha */
+  min-width: 15px;         /* Ancho mínimo para mostrar uno o más dígitos */
+  height: 15px;            /* Alto del contador */
+  border-radius: 999px;    /* Forma circular o de cápsula */
+  background: #7c3aed;     /* Fondo violeta */
+  color: #ffffff;          /* Texto blanco */
+  font-size: 0.62rem;      /* Tamaño pequeño */
+  font-weight: 700;        /* Negrita */
+  display: inline-flex;    /* Permite centrar el número */
+  align-items: center;     /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  padding: 0 4px;          /* Espacio lateral interno */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  /* 
+    Permite que los elementos del header bajen de línea en móviles.
+  */
+  .cm-header__container {
+    flex-wrap: wrap;       /* Permite reorganizar los elementos en varias líneas */
+    padding: 0.7rem 1rem;  /* Reduce un poco el padding lateral */
+  }
+
+  /* 
+    En pantallas pequeñas sí se muestra el botón hamburguesa.
+  */
+  .cm-menu-button {
+    display: flex;
+  }
+
+  /* 
+    El menú de navegación se oculta por defecto en móvil
+    y cambia a disposición vertical.
+  */
+  .cm-nav {
+    width: 100%;              /* Ocupa todo el ancho */
+    display: none;            /* Se oculta inicialmente */
+    flex-direction: column;   /* Los enlaces se acomodan en columna */
+    align-items: stretch;     /* Se extienden al ancho disponible */
+    gap: 0.65rem;             /* Espacio entre opciones */
+    padding-top: 0.75rem;     /* Separación con la parte superior */
+  }
+
+  /* 
+    Cuando la clase cm-nav--open está activa,
+    el menú móvil se muestra.
+  */
+  .cm-nav.cm-nav--open {
+    display: flex;
+  }
+
+  /* 
+    En móvil, los enlaces del menú y favoritos
+    toman apariencia de bloques grandes táctiles.
+  */
+  .cm-nav__link,
+  .cm-favorites {
+    min-height: 44px;           /* Altura mínima recomendada para interacción táctil */
+    border: 1px solid #e5e7eb;  /* Borde suave */
+    border-radius: 12px;        /* Bordes redondeados */
+    padding: 0.85rem 1rem;      /* Espaciado interno amplio */
+    background: #ffffff;        /* Fondo blanco */
+  }
+
+  /* 
+    En móvil, favoritos ocupa todo el ancho disponible.
+  */
+  .cm-favorites {
+    width: 100%;                 /* Ocupa toda la fila */
+    justify-content: flex-start; /* Alinea su contenido a la izquierda */
+  }
+
+  /* 
+    Ajusta ligeramente el tamaño del texto de marca en móvil.
+  */
+  .cm-brand__text {
+    font-size: 1.12rem;
+  }
+}

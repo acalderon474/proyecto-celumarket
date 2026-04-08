@@ -1,0 +1,25 @@
+/* 
+  El componente raíz se comportará como una estructura vertical:
+  Header arriba, contenido en el centro y Footer abajo.
+*/
+:host {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+}
+
+/* 
+  Esta zona ocupa el espacio principal de la pantalla.
+  Así el footer no se sube y queda al final.
+*/
+.main-container {
+  flex: 1;
+  width: 100%;
+}
+
+/* 
+  Si luego quieres que todas las vistas tengan un ancho máximo,
+  puedes envolver el contenido interno de cada página en su propio contenedor.
+  Por ahora lo dejamos limpio para no romper tus componentes actuales.
+*/

@@ -1,1 +1,169 @@
-<p>header works!</p>
+<!-- 
+  Encabezado principal del componente.
+  Contiene toda la estructura visual del header de CeluMarket.
+-->
+<header class="cm-header">
+  <!-- 
+    Contenedor interno del header.
+    Organiza la marca, el botón hamburguesa y la navegación.
+  -->
+  <div class="cm-header__container">
+    
+    <!-- 
+      Logo o marca del proyecto.
+      Al hacer clic redirige a la ruta /home
+      y también cierra el menú si está abierto.
+    -->
+    <a
+      class="cm-brand"
+      routerLink="/home"
+      (click)="closeMenu()"
+      aria-label="Ir al inicio"
+    >
+      <!-- 
+        Contenedor visual del logo.
+        Incluye un SVG con forma de celular,
+        acorde con la temática del proyecto CeluMarket.
+      -->
+      <span class="cm-brand__logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <!-- Cuerpo del celular -->
+          <rect x="7" y="3" width="10" height="18" rx="2"></rect>
+          <!-- Botón o detalle inferior del celular -->
+          <circle cx="12" cy="17.5" r="0.8"></circle>
+        </svg>
+      </span>
+
+      <!-- 
+        Texto dinámico del nombre de la marca.
+        Se obtiene desde la variable brandName del componente.
+      -->
+      <span class="cm-brand__text">{{ brandName }}</span>
+    </a>
+
+    <!-- 
+      Botón hamburguesa visible en móvil.
+      Permite abrir o cerrar el menú de navegación.
+    -->
+    <button
+      class="cm-menu-button"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Abrir menú de navegación"
+    >
+      <!-- 
+        Las tres líneas que forman el ícono hamburguesa.
+      -->
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- 
+      Navegación principal del sitio.
+      La clase cm-nav--open se activa dinámicamente
+      cuando el menú está abierto en móviles.
+    -->
+    <nav class="cm-nav" [class.cm-nav--open]="menuOpen()">
+
+      <!-- 
+        Recorre el arreglo navItems para generar dinámicamente
+        cada enlace del menú de navegación.
+        Se usa track item.route para optimizar el renderizado.
+      -->
+      @for (item of navItems; track item.route) {
+        <a
+          class="cm-nav__link"
+          [routerLink]="item.route"
+          [class.active]="isActive(item.route)"
+          (click)="closeMenu()"
+        >
+          <!-- 
+            Según el valor de item.icon, se renderiza
+            el ícono SVG correspondiente para cada opción.
+          -->
+          @switch (item.icon) {
+
+            <!-- Ícono para Home -->
+            @case ('home') {
+              <svg
+                class="cm-nav__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M4 10.5L12 4l8 6.5"></path>
+                <path d="M6.5 9.5V20h11V9.5"></path>
+              </svg>
+            }
+
+            <!-- Ícono para Catálogo -->
+            @case ('catalog') {
+              <svg
+                class="cm-nav__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <rect x="4" y="4" width="6" height="6"></rect>
+                <rect x="14" y="4" width="6" height="6"></rect>
+                <rect x="4" y="14" width="6" height="6"></rect>
+                <rect x="14" y="14" width="6" height="6"></rect>
+              </svg>
+            }
+
+            <!-- Ícono para Contacto -->
+            @case ('contact') {
+              <svg
+                class="cm-nav__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M7.5 5.5c0 7 4 11 11 11"></path>
+                <path d="M15.5 14.5l2.5 2.5c.6.6.6 1.5 0 2.1l-1 1c-.5.5-1.2.7-1.9.5C8.7 18.9 5.1 15.3 3.4 8.9c-.2-.7 0-1.4.5-1.9l1-1c.6-.6 1.5-.6 2.1 0l2.5 2.5c.5.5.6 1.3.2 1.9l-1 1.5"></path>
+              </svg>
+            }
+          }
+
+          <!-- 
+            Texto visible de la opción del menú.
+          -->
+          <span>{{ item.label }}</span>
+        </a>
+      }
+
+      <!-- 
+        Enlace fijo hacia la sección de favoritos.
+        También se resalta visualmente si la ruta actual es /favorites.
+      -->
+      <a
+        class="cm-favorites"
+        routerLink="/favorites"
+        [class.active]="isFavoriteRoute()"
+        (click)="closeMenu()"
+        aria-label="Ir a favoritos"
+        title="Favoritos"
+      >
+        <!-- 
+          Ícono SVG de favoritos en forma de corazón.
+        -->
+        <svg
+          class="cm-favorites__icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+        </svg>
+
+        <!-- 
+          Si la cantidad de favoritos es mayor que 0,
+          se muestra un contador con ese valor.
+        -->
+        @if (favoriteCount() > 0) {
+          <span class="cm-favorites__count">
+            {{ favoriteCount() }}
+          </span>
+        }
+      </a>
+    </nav>
+  </div>
+</header>
