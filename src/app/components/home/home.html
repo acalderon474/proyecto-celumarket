@@ -88,7 +88,6 @@
           [class.home-brand-chip--xiaomi]="brand.cssClass === 'xiaomi'"
           [routerLink]="['/catalog']"
         >
-          <!-- Nombre visible de la marca -->
           {{ brand.name }}
         </a>
       }
@@ -116,7 +115,6 @@
           <div class="home-benefit-card__icon">
             @switch (benefit.icon) {
 
-              <!-- Ícono de garantía -->
               @case ('shield') {
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-3z"></path>
@@ -124,7 +122,6 @@
                 </svg>
               }
 
-              <!-- Ícono de envío -->
               @case ('truck') {
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M3 7h11v8H3z"></path>
@@ -134,7 +131,6 @@
                 </svg>
               }
 
-              <!-- Ícono de mejor precio o reconocimiento -->
               @case ('badge') {
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <circle cx="12" cy="8" r="4"></circle>
@@ -158,128 +154,155 @@
 
   <!-- 
     Sección de productos destacados.
-    Muestra una selección limitada de productos relevantes de la tienda.
+    Aquí se aplica Bootstrap en la distribución de tarjetas
+    usando container, row y columnas responsivas.
+    
+    Además, queda preparada para que el efecto hover
+    se vea premium desde home.css, similar a catalog.
   -->
-  <section class="home-section">
-    <div class="home-section__header">
-      <div>
-        <h2 class="home-section__title">Productos Destacados</h2>
-        <p class="home-section__subtitle">
-          Los equipos más destacados del momento
-        </p>
+  <section class="home-section featured-products-section">
+    <div class="container">
+
+      <!-- 
+        Encabezado de la sección de productos destacados.
+        Combina el estilo visual propio de Home con una estructura
+        más limpia y adaptable.
+      -->
+      <div class="home-section__header featured-products-section__header">
+        <div>
+          <span class="featured-products-section__badge">CeluMarket</span>
+          <h2 class="home-section__title featured-products-section__title">
+            Productos Destacados
+          </h2>
+          <p class="home-section__subtitle featured-products-section__subtitle">
+            Los equipos más destacados del momento
+          </p>
+        </div>
+
+        <!-- Enlace para ver todos los productos del catálogo -->
+        <a class="home-section__link" routerLink="/catalog">Ver todos</a>
       </div>
 
-      <!-- Enlace para ver todos los productos del catálogo -->
-      <a class="home-section__link" routerLink="/catalog">Ver todos</a>
-    </div>
+      <!-- 
+        Estado de carga.
+        Se muestra mientras los productos destacados se están consultando.
+      -->
+      @if (loading()) {
+        <div class="home-state-card text-center">
+          <p>Cargando productos destacados...</p>
+        </div>
+      }
 
-    <!-- 
-      Estado de carga.
-      Se muestra mientras los productos destacados se están consultando.
-    -->
-    @if (loading()) {
-      <div class="home-state-card">
-        <p>Cargando productos destacados...</p>
-      </div>
-    }
+      <!-- 
+        Estado de error.
+        Se muestra si falla la carga de productos.
+      -->
+      @if (errorMessage()) {
+        <div class="home-state-card home-state-card--error text-center">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
 
-    <!-- 
-      Estado de error.
-      Se muestra si falla la carga de productos.
-    -->
-    @if (errorMessage()) {
-      <div class="home-state-card home-state-card--error">
-        <p>{{ errorMessage() }}</p>
-      </div>
-    }
-
-    <!-- 
-      Estado correcto.
-      Solo se muestra cuando ya no está cargando y no existe error.
-    -->
-    @if (!loading() && !errorMessage()) {
-      <div class="home-products-grid">
+      <!-- 
+        Estado correcto.
+        Solo se muestra cuando ya no está cargando y no existe error.
+      -->
+      @if (!loading() && !errorMessage()) {
 
         <!-- 
-          Recorre los productos destacados y genera una tarjeta por cada producto.
+          Grilla Bootstrap:
+          - 1 tarjeta por fila en móvil pequeño
+          - 2 tarjetas por fila en tablet
+          - 3 tarjetas por fila en escritorio
         -->
-        @for (product of featuredProducts(); track getProductId(product)) {
-          <article class="home-product-card">
+        <div class="row g-4">
 
-            <!-- 
-              Área clickeable de la imagen del producto.
-              Redirige al detalle del producto.
-            -->
-            <a
-              class="home-product-card__image-wrapper"
-              [routerLink]="['/product', getProductId(product)]"
-            >
-              <!-- Marca visible del producto -->
-              <span class="home-product-card__badge">
-                {{ getProductBrand(product) }}
-              </span>
+          <!-- 
+            Recorre los productos destacados y genera una tarjeta por cada producto.
+          -->
+          @for (product of featuredProducts(); track getProductId(product)) {
+            <div class="col-12 col-sm-6 col-lg-4">
+              <article class="home-product-card card h-100 border-0">
 
-              <!-- 
-                Botón para agregar o quitar el producto de favoritos.
-                Usa preventDefault y stopPropagation desde el método para no abrir el detalle por accidente.
-              -->
-              <button
-                class="home-product-card__favorite"
-                type="button"
-                [class.active]="isFavorite(product)"
-                (click)="toggleFavorite(product, $event)"
-                aria-label="Agregar o quitar de favoritos"
-                title="Favoritos"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
-                </svg>
-              </button>
-
-              <!-- Imagen principal del producto -->
-              <img
-                class="home-product-card__image"
-                [src]="getProductImage(product)"
-                [alt]="getProductName(product)"
-              />
-            </a>
-
-            <!-- 
-              Cuerpo textual de la tarjeta del producto.
-            -->
-            <div class="home-product-card__body">
-
-              <!-- Nombre del producto -->
-              <h3 class="home-product-card__title">
-                {{ getProductName(product) }}
-              </h3>
-
-              <!-- Descripción corta del producto -->
-              <p class="home-product-card__description">
-                {{ getProductShortDescription(product) }}
-              </p>
-
-              <!-- 
-                Pie de la tarjeta.
-                Muestra precio y botón de acceso al detalle.
-              -->
-              <div class="home-product-card__footer">
-                <span class="home-product-card__price">
-                  {{ formatPrice(getProductPrice(product)) }}
-                </span>
-
+                <!-- 
+                  Área clickeable de la imagen del producto.
+                  Redirige al detalle del producto.
+                -->
                 <a
-                  class="home-product-card__button"
+                  class="home-product-card__image-wrapper"
                   [routerLink]="['/product', getProductId(product)]"
                 >
-                  Ver más
+                  <!-- Marca visible del producto -->
+                  <span class="home-product-card__badge">
+                    {{ getProductBrand(product) }}
+                  </span>
+
+                  <!-- 
+                    Botón para agregar o quitar el producto de favoritos.
+                    Usa preventDefault y stopPropagation desde el método
+                    para no abrir el detalle por accidente.
+                  -->
+                  <button
+                    class="home-product-card__favorite"
+                    type="button"
+                    [class.active]="isFavorite(product)"
+                    (click)="toggleFavorite(product, $event)"
+                    aria-label="Agregar o quitar de favoritos"
+                    title="Favoritos"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+                    </svg>
+                  </button>
+
+                  <!-- Imagen principal del producto -->
+                  <img
+                    class="home-product-card__image"
+                    [src]="getProductImage(product)"
+                    [alt]="getProductName(product)"
+                  />
                 </a>
-              </div>
+
+                <!-- 
+                  Cuerpo textual de la tarjeta del producto.
+                  Usa card-body de Bootstrap y conserva
+                  la estructura visual propia del proyecto.
+                -->
+                <div class="card-body home-product-card__body">
+
+                  <!-- Nombre del producto -->
+                  <h3 class="home-product-card__title">
+                    {{ getProductName(product) }}
+                  </h3>
+
+                  <!-- Descripción corta del producto -->
+                  <p class="home-product-card__description">
+                    {{ getProductShortDescription(product) }}
+                  </p>
+
+                  <!-- 
+                    Pie de la tarjeta.
+                    Muestra precio y botón de acceso al detalle.
+                  -->
+                  <div class="home-product-card__footer">
+                    <span class="home-product-card__price">
+                      {{ formatPrice(getProductPrice(product)) }}
+                    </span>
+
+                    <a
+                      class="home-product-card__button"
+                      [routerLink]="['/product', getProductId(product)]"
+                    >
+                      Ver más
+                    </a>
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
-        }
-      </div>
-    }
+          }
+        </div>
+      }
+    </div>
   </section>
 
   <!-- 

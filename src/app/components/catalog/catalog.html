@@ -1,1 +1,254 @@
-<p>catalog works!</p>
+<!-- 
+  Contenedor principal de la página del catálogo.
+  Agrupa encabezado, filtros, listado de productos y paginación.
+-->
+<main class="catalog-page">
+
+  <!-- 
+    Encabezado visual del catálogo.
+    Refuerza la identidad de CeluMarket y presenta la sección.
+  -->
+  <section class="catalog-header">
+    <div class="catalog-header__content">
+      <span class="catalog-header__badge">CeluMarket</span>
+
+      <h1>Catálogo de celulares</h1>
+
+      <p>
+        Explora los modelos disponibles en CeluMarket y encuentra el smartphone
+        ideal para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- 
+    Contenido principal del catálogo.
+    Se divide en:
+    1. Panel lateral de filtros
+    2. Área de productos
+  -->
+  <section class="catalog-content">
+
+    <!-- Panel lateral de filtros -->
+    <aside class="filters-catalog">
+      <div class="filters-catalog__card">
+
+        <h2>Filtros</h2>
+
+        <p>
+          Usa el buscador o selecciona una marca para encontrar más rápido
+          tu equipo favorito.
+        </p>
+
+        <!-- Campo de búsqueda -->
+        <div class="filter-group">
+          <label for="search-catalog" class="filter-label">
+            Buscar producto
+          </label>
+
+          <input
+            #searchInput
+            type="search"
+            id="search-catalog"
+            name="search"
+            class="catalog-search form-control"
+            placeholder="Buscar por marca, modelo o descripción..."
+            aria-label="Buscar productos"
+            [value]="searchTerm()"
+            (input)="setSearchTerm(searchInput.value)"
+          />
+        </div>
+
+        <!-- Filtro por marca -->
+        <div class="filter-group">
+          <label for="brand-filter" class="filter-label">
+            Filtrar por marca
+          </label>
+
+          <select
+            #brandSelect
+            id="brand-filter"
+            class="catalog-select form-select"
+            [value]="selectedBrand()"
+            (change)="setSelectedBrand(brandSelect.value)"
+          >
+            <option value="">Todas las marcas</option>
+
+            @for (brand of brands(); track brand) {
+              <option [value]="brand">
+                {{ brand }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <!-- Botón para limpiar filtros -->
+        <button
+          type="button"
+          class="btn btn-outline-primary w-100 filters-catalog__clear"
+          (click)="clearFilters()"
+        >
+          Limpiar filtros
+        </button>
+      </div>
+    </aside>
+
+    <!-- Área principal del catálogo -->
+    <section class="catalog-products">
+
+      <!-- Encabezado interno del listado -->
+      <div class="catalog-products__top">
+        <div>
+          <h2 class="catalog-products__title">Equipos disponibles</h2>
+
+          <p class="catalog-products__count">
+            {{ totalFilteredProducts() }} productos encontrados
+          </p>
+        </div>
+
+        <div class="catalog-products__page-info">
+          Página {{ currentPage() }} de {{ totalPages() }}
+        </div>
+      </div>
+
+      <!-- Estado de carga -->
+      @if (loading()) {
+        <div class="catalog-state">
+          <p>Cargando catálogo...</p>
+        </div>
+      }
+
+      <!-- Estado de error -->
+      @if (!loading() && errorMessage()) {
+        <div class="catalog-state catalog-state--error">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <!-- Estado sin resultados -->
+      @if (!loading() && !errorMessage() && !hasFilteredProducts()) {
+        <div class="catalog-state">
+          <h3>No se encontraron productos</h3>
+          <p>
+            Intenta cambiar el texto de búsqueda o selecciona otra marca.
+          </p>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="clearFilters()"
+          >
+            Restablecer filtros
+          </button>
+        </div>
+      }
+
+      <!-- Estado con resultados -->
+      @if (!loading() && !errorMessage() && hasFilteredProducts()) {
+        <div class="catalog-products-grid">
+
+          @for (product of paginatedProducts(); track product.id) {
+            <article class="catalog-product-card">
+
+              <a
+                class="catalog-product-card__image-wrapper"
+                [routerLink]="['/product', product.id]"
+              >
+                <span class="catalog-product-card__badge">
+                  {{ product.brand }}
+                </span>
+
+                <img
+                  class="catalog-product-card__image"
+                  [src]="product.image"
+                  [alt]="product.brand + ' ' + product.model"
+                />
+              </a>
+
+              <div class="catalog-product-card__body">
+
+                <p class="catalog-product-card__brand">
+                  {{ product.brand }}
+                </p>
+
+                <h3 class="catalog-product-card__title">
+                  {{ product.model }}
+                </h3>
+
+                <p class="catalog-product-card__description">
+                  {{ product.description }}
+                </p>
+
+                <div class="catalog-product-card__footer">
+                  <span class="catalog-product-card__price">
+                    {{ formatPrice(product.price) }}
+                  </span>
+
+                  <a
+                    class="catalog-product-card__button"
+                    [routerLink]="['/product', product.id]"
+                  >
+                    Ver más
+                  </a>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+
+        <!-- Paginación -->
+        <nav
+          class="catalog-pagination-wrapper"
+          aria-label="Paginación del catálogo"
+        >
+          <ul class="pagination justify-content-center flex-wrap">
+
+            <li
+              class="page-item"
+              [class.disabled]="currentPage() === 1"
+            >
+              <button
+                type="button"
+                class="page-link"
+                [disabled]="currentPage() === 1"
+                (click)="previousPage()"
+              >
+                Anterior
+              </button>
+            </li>
+
+            @for (page of getPages(); track page) {
+              <li
+                class="page-item"
+                [class.active]="currentPage() === page"
+                [attr.aria-current]="currentPage() === page ? 'page' : null"
+              >
+                <button
+                  type="button"
+                  class="page-link"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              </li>
+            }
+
+            <li
+              class="page-item"
+              [class.disabled]="currentPage() === totalPages()"
+            >
+              <button
+                type="button"
+                class="page-link"
+                [disabled]="currentPage() === totalPages()"
+                (click)="nextPage()"
+              >
+                Siguiente
+              </button>
+            </li>
+          </ul>
+        </nav>
+      }
+    </section>
+  </section>
+</main>

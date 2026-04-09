@@ -1,13 +1,24 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-import { Product } from './product.service';
+// 1. Importamos el nombre correcto: ProductService
+import { ProductService } from './product.service';
 
-describe('Product', () => {
-  let service: Product;
+describe('ProductService', () => {
+  // 2. Actualizamos el tipo de la variable
+  let service: ProductService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Product);
+    TestBed.configureTestingModule({
+      // 3. Proveemos las herramientas HTTP falsas/de prueba para que el servicio no falle
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+    // 4. Inyectamos el servicio con su nombre correcto
+    service = TestBed.inject(ProductService);
   });
 
   it('should be created', () => {

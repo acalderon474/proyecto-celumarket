@@ -1,0 +1,502 @@
+/* =========================================================
+   PÁGINA GENERAL DEL CATÁLOGO
+   ========================================================= */
+.catalog-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* =========================================================
+   ENCABEZADO DEL CATÁLOGO
+   ========================================================= */
+.catalog-header {
+  padding: 4rem 1.5rem 2.8rem;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  color: #ffffff;
+}
+
+.catalog-header__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.catalog-header__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.catalog-header h1 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.catalog-header p {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+.catalog-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* =========================================================
+   PANEL LATERAL DE FILTROS
+   ========================================================= */
+.filters-catalog {
+  width: 100%;
+}
+
+.filters-catalog__card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  padding: 1.4rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  position: sticky;
+  top: 95px;
+}
+
+.filters-catalog__card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.filters-catalog__card p {
+  margin: 0 0 1.25rem;
+  color: #475569;
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.catalog-search,
+.catalog-select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #cbd5e1;
+  border-radius: 1rem;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.catalog-search::placeholder {
+  color: #94a3b8;
+}
+
+.catalog-search:focus,
+.catalog-select:focus {
+  background: #ffffff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+.filters-catalog__clear {
+  margin-top: 0.4rem;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+/* =========================================================
+   SECCIÓN DE PRODUCTOS
+   ========================================================= */
+.catalog-products {
+  width: 100%;
+}
+
+.catalog-products__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalog-products__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.catalog-products__count {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.catalog-products__page-info {
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ESTADOS DEL CATÁLOGO
+   ========================================================= */
+.catalog-state {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+.catalog-state h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.catalog-state p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.catalog-state .btn {
+  margin-top: 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+}
+
+.catalog-state--error {
+  border-color: #fecaca;
+  background: #fff7f7;
+}
+
+.catalog-state--error p {
+  color: #b91c1c;
+}
+
+/* =========================================================
+   GRILLA DE PRODUCTOS
+   4 PRODUCTOS POR FILA EN PANTALLAS AMPLIAS
+   ========================================================= */
+.catalog-products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* =========================================================
+   TARJETA DE PRODUCTO
+   ========================================================= */
+.catalog-product-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.4rem;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.catalog-product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 42px rgba(15, 23, 42, 0.12);
+  border-color: #dbeafe;
+}
+
+.catalog-product-card__image-wrapper {
+  position: relative;
+  display: block;
+  background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.catalog-product-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  color: #4f46e5;
+  border-radius: 999px;
+  padding: 0.34rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.catalog-product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 1rem;
+}
+
+.catalog-product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem;
+  flex: 1;
+}
+
+.catalog-product-card__brand {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.catalog-product-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.35;
+}
+
+.catalog-product-card__description {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  min-height: 4.1rem;
+}
+
+.catalog-product-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.catalog-product-card__price {
+  color: #1d4ed8;
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.catalog-product-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.6rem 0.95rem;
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.catalog-product-card__button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* =========================================================
+   PAGINACIÓN
+   Se apoya en las clases de Bootstrap:
+   - pagination
+   - page-item
+   - page-link
+
+   Aquí se personaliza para:
+   - bordes redondeados
+   - apariencia más moderna
+   - hover azul
+   ========================================================= */
+.catalog-pagination-wrapper {
+  margin-top: 2rem;
+}
+
+.catalog-pagination-wrapper .pagination {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.catalog-pagination-wrapper .page-item {
+  display: flex;
+}
+
+.catalog-pagination-wrapper .page-item .page-link {
+  min-width: 44px;
+  height: 44px;
+  border: 1px solid #dbe3f0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.95rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  transition: all 0.22s ease;
+}
+
+.catalog-pagination-wrapper .page-item .page-link:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #2563eb; /* número azul al pasar el cursor */
+}
+
+.catalog-pagination-wrapper .page-item.active .page-link {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(79, 92, 240, 0.25);
+}
+
+.catalog-pagination-wrapper .page-item.disabled .page-link,
+.catalog-pagination-wrapper .page-item .page-link:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+  border-color: #e2e8f0;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
+   ========================================================= */
+.filters-catalog .btn,
+.catalog-state .btn {
+  border-radius: 999px;
+}
+
+.filters-catalog .btn-outline-primary {
+  border-width: 1px;
+  font-weight: 700;
+}
+
+.catalog-state .btn-primary {
+  font-weight: 700;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1200px) {
+  .catalog-products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .catalog-content {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-catalog__card {
+    position: static;
+  }
+
+  .catalog-products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalog-products__top {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .catalog-header {
+    padding: 3.2rem 1rem 2.2rem;
+  }
+
+  .catalog-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .filters-catalog__card {
+    padding: 1.1rem;
+    border-radius: 1.2rem;
+  }
+
+  .catalog-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-product-card__description {
+    min-height: auto;
+  }
+
+  .catalog-product-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .catalog-product-card__button {
+    width: 100%;
+  }
+
+  .catalog-pagination-wrapper .page-item .page-link {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.8rem;
+  }
+}
