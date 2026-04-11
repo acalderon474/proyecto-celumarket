@@ -47,7 +47,7 @@ export class Footer {
   // Marcas que maneja el catálogo
   brands: BrandItem[] = [
     { name: 'Samsung' },
-    { name: 'iPhone' },
+    { name: 'Apple' },
     { name: 'Motorola' },
     { name: 'Xiaomi' }
   ];

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { take } from 'rxjs';
 
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 /*
   Decorador del componente Catalog.
@@ -72,6 +73,11 @@ export class Catalog implements OnInit {
   brands = signal<string[]>([]);
 
   /*
+    Inyectamos ActivatedRoute para poder leer la URL
+  */
+  private route = inject(ActivatedRoute);
+
+  /*
     Constructor del componente.
     Inyecta el servicio principal de productos.
   */
@@ -83,6 +89,17 @@ export class Catalog implements OnInit {
   */
   ngOnInit(): void {
     this.loadProducts();
+  
+  /* Eschuchamos si la URL trae el parámetro '?brand='
+  */
+  this.route.queryParams.subscribe(params => {
+    const brandFromUrl = params['brand'];
+    if (brandFromUrl) {
+      
+      // Si viene una marca por la URL, activamos el filtro automáticamente
+      this.setSelectedBrand(brandFromUrl); 
+    }
+  });
   }
 
   /*

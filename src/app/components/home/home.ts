@@ -141,7 +141,7 @@ export class Home implements OnInit {
   */
   brands: BrandBadge[] = [
     { name: 'Samsung', cssClass: 'samsung' },
-    { name: 'iPhone', cssClass: 'iphone' },
+    { name: 'Apple', cssClass: 'apple' },
     { name: 'Motorola', cssClass: 'motorola' },
     { name: 'Xiaomi', cssClass: 'xiaomi' }
   ];

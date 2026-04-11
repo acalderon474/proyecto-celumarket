@@ -83,10 +83,11 @@
         <a
           class="home-brand-chip"
           [class.home-brand-chip--samsung]="brand.cssClass === 'samsung'"
-          [class.home-brand-chip--iphone]="brand.cssClass === 'iphone'"
+          [class.home-brand-chip--apple]="brand.cssClass === 'apple'"
           [class.home-brand-chip--motorola]="brand.cssClass === 'motorola'"
           [class.home-brand-chip--xiaomi]="brand.cssClass === 'xiaomi'"
           [routerLink]="['/catalog']"
+          [queryParams]="{ brand: brand.name }"
         >
           {{ brand.name }}
         </a>
@@ -170,7 +171,6 @@
       -->
       <div class="home-section__header featured-products-section__header">
         <div>
-          <span class="featured-products-section__badge">CeluMarket</span>
           <h2 class="home-section__title featured-products-section__title">
             Productos Destacados
           </h2>
