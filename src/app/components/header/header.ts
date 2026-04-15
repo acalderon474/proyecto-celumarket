@@ -75,6 +75,12 @@ export class Header implements OnInit {
     this.updateScreenMode();
   }
 
+  // El número se actualiza al instante cuando se borra o se vacíe favoritos
+  @HostListener('window:favorites-updated')
+onFavoritesUpdated(): void {
+  this.loadFavoriteCount();
+}
+
   // Abre o cierra el menú hamburguesa
   toggleMenu(): void {
     if (this.isMobile()) {

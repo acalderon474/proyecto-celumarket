@@ -1,0 +1,500 @@
+/* 
+  :host representa el componente actual en Angular.
+  Se usa para que el componente de Favoritos se comporte
+  como un bloque dentro de la aplicación.
+*/
+:host {
+  display: block;
+}
+
+/* 
+  Contenedor principal de toda la página de favoritos.
+  Define el ancho completo, el color de fondo general
+  y el color base del texto.
+*/
+.favorites-page {
+  width: 100%;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* Hero */
+.favorites-hero {
+  max-width: 1240px;      /* Limita el ancho máximo del hero */
+  margin: 0 auto;         /* Centra el bloque horizontalmente */
+  padding: 1.1rem 1.5rem 0; /* Espaciado superior y lateral */
+}
+
+/* 
+  Contenedor interno del hero.
+  Aplica el fondo degradado principal y el estilo visual
+  de presentación de la página de favoritos.
+*/
+.favorites-hero__content {
+  background: linear-gradient(135deg, #3b82f6 0%, #5b47f5 45%, #d946ef 100%);
+  padding: 2rem 2.3rem;
+  color: #ffffff;
+}
+
+/* 
+  Texto pequeño superior del hero.
+  Funciona como una etiqueta visual de la marca.
+*/
+.favorites-hero__eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* 
+  Título principal de la vista de favoritos.
+*/
+.favorites-hero__title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+/* 
+  Descripción del hero.
+  Explica brevemente la utilidad de esta vista.
+*/
+.favorites-hero__description {
+  max-width: 700px;
+  margin: 0.85rem 0 0;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Sección principal */
+.favorites-section {
+  max-width: 1240px;       /* Ancho máximo del contenido */
+  margin: 0 auto;          /* Centrado horizontal */
+  padding: 1.5rem 1.5rem 0; /* Espaciado superior y lateral */
+}
+
+/* Estados */
+
+/* 
+  Estilos compartidos para:
+  - tarjeta de estado (cargando o error)
+  - bloque de estado vacío
+  
+  Ambos comparten fondo blanco, borde y sombra.
+*/
+.favorites-state-card,
+.favorites-empty {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* 
+  Tarjeta general para estados como carga o error.
+*/
+.favorites-state-card {
+  border-radius: 16px;
+  padding: 1.2rem;
+  color: #475569;
+}
+
+/* 
+  Variante de error de la tarjeta de estado.
+  Cambia borde, fondo y color para indicar fallo visualmente.
+*/
+.favorites-state-card--error {
+  border-color: #fecaca;
+  background: #fff7f7;
+  color: #b91c1c;
+}
+
+/* Estado vacío */
+
+/* 
+  Contenedor del estado vacío.
+  Se muestra cuando no hay productos favoritos guardados.
+*/
+.favorites-empty {
+  border-radius: 18px;
+  padding: 2rem 1.4rem;
+  text-align: center;
+}
+
+/* 
+  Círculo decorativo que contiene el ícono del estado vacío.
+*/
+.favorites-empty__icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+  Ícono SVG del estado vacío.
+*/
+.favorites-empty__icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 
+  Título principal del mensaje de estado vacío.
+*/
+.favorites-empty__title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Texto descriptivo del estado vacío.
+*/
+.favorites-empty__description {
+  max-width: 620px;
+  margin: 0.75rem auto 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* 
+  Contenedor de botones del estado vacío.
+  Alinea las acciones principales como:
+  - ir al catálogo
+  - volver al inicio
+*/
+.favorites-empty__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.85rem;
+  flex-wrap: wrap; /* Permite que los botones bajen de línea si hace falta */
+  margin-top: 1.2rem;
+}
+
+/* 
+  Estilo base para los botones del estado vacío.
+*/
+.favorites-button {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* 
+  Efecto hover de los botones.
+*/
+.favorites-button:hover {
+  transform: translateY(-1px);
+}
+
+/* 
+  Botón principal del estado vacío.
+*/
+.favorites-button--primary {
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  color: #ffffff;
+}
+
+/* 
+  Botón secundario del estado vacío.
+*/
+.favorites-button--secondary {
+  background: #ffffff;
+  color: #4f5cf0;
+  border: 1px solid #dbe3f0;
+}
+
+/* Barra superior */
+
+/* 
+  Barra superior de control de la sección con favoritos.
+  Aquí se ubican el título, subtítulo y botón para vaciar favoritos.
+*/
+.favorites-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 
+  Título de la barra superior.
+*/
+.favorites-toolbar__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Subtítulo de la barra superior.
+  Normalmente muestra la cantidad de productos guardados.
+*/
+.favorites-toolbar__subtitle {
+  margin: 0.25rem 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* 
+  Botón para vaciar toda la lista de favoritos.
+*/
+.favorites-toolbar__clear {
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Grid de favoritos */
+
+/* 
+  Grilla principal donde se muestran las tarjetas
+  de productos favoritos.
+*/
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* 
+  Tarjeta individual de cada producto favorito.
+*/
+.favorites-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden; /* Evita que contenido interno sobresalga del borde redondeado */
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  Contenedor del área de imagen de la tarjeta.
+  Se usa como enlace al detalle del producto.
+*/
+.favorites-card__image-wrapper {
+  position: relative;
+  display: block;
+  background: #f3f4f6;
+  aspect-ratio: 4 / 3; /* Mantiene proporción uniforme en las imágenes */
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* 
+  Badge superior con la marca del producto.
+*/
+.favorites-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: #ffffff;
+  color: #4f5cf0;
+  border-radius: 999px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* 
+  Botón para quitar un producto de favoritos.
+  Se ubica arriba a la derecha de la imagen.
+*/
+.favorites-card__remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* 
+  Ícono SVG del botón eliminar favorito.
+*/
+.favorites-card__remove svg {
+  width: 17px;
+  height: 17px;
+  stroke: #7c3aed;
+  fill: rgba(124, 58, 237, 0.15);
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 
+  Imagen principal del producto favorito.
+*/
+.favorites-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen se adapte sin deformarse */
+  display: block;
+}
+
+/* Cuerpo */
+
+/* 
+  Cuerpo de la tarjeta.
+  Contiene nombre, descripción, precio y botón de acción.
+*/
+.favorites-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.95rem;
+  flex: 1; /* Permite que el contenido crezca y mantenga consistencia entre tarjetas */
+}
+
+/* 
+  Título del producto.
+*/
+.favorites-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* 
+  Descripción breve del producto.
+  Se deja una altura mínima para mantener equilibrio visual
+  entre tarjetas de distinto contenido.
+*/
+.favorites-card__description {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  min-height: 2.8rem;
+}
+
+/* 
+  Pie de la tarjeta.
+  Distribuye el precio y el botón de detalle.
+*/
+.favorites-card__footer {
+  margin-top: auto; /* Empuja el footer hacia la parte baja de la card */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* 
+  Precio destacado del producto.
+*/
+.favorites-card__price {
+  color: #2563eb;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* 
+  Botón para ir al detalle del producto.
+*/
+.favorites-card__button {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.52rem 0.8rem;
+  background: linear-gradient(135deg, #4f5cf0, #7c3aed);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  /* 
+    En pantallas medianas-grandes, la grilla pasa de 4 a 3 columnas.
+  */
+  .favorites-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  /* 
+    En tablets, la grilla pasa a 2 columnas.
+  */
+  .favorites-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* 
+    Reduce el padding lateral del hero y del contenido
+    para ajustarlo mejor a pantallas pequeñas.
+  */
+  .favorites-hero,
+  .favorites-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* 
+    Ajusta el espaciado interno del hero en móvil.
+  */
+  .favorites-hero__content {
+    padding: 1.5rem 1.2rem;
+  }
+
+  /* 
+    Reduce el tamaño del título principal en pantallas pequeñas.
+  */
+  .favorites-hero__title {
+    font-size: 1.7rem;
+  }
+
+  /* 
+    La barra superior pasa a formato vertical
+    para que el contenido no se comprima.
+  */
+  .favorites-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* 
+    En móviles, la grilla se convierte en una sola columna.
+  */
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}

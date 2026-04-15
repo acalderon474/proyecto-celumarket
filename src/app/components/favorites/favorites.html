@@ -1,1 +1,281 @@
-<p>favorites works!</p>
+<!-- 
+  Contenedor principal de toda la página de favoritos.
+  Aquí se agrupan el encabezado visual y el contenido dinámico
+  de los productos que el usuario ha guardado.
+-->
+<section class="favorites-page">
+
+  <!-- 
+    Encabezado principal de la página de favoritos.
+    Funciona como una sección tipo hero para presentar
+    el propósito de esta vista dentro de CeluMarket.
+  -->
+  <section class="favorites-hero">
+    <div class="favorites-hero__content">
+
+      <!-- 
+        Texto pequeño superior que refuerza la marca del proyecto.
+      -->
+      <p class="favorites-hero__eyebrow">CeluMarket</p>
+
+      <!-- 
+        Título principal de la vista.
+      -->
+      <h1 class="favorites-hero__title">Tus Favoritos</h1>
+
+      <!-- 
+        Descripción introductoria de la página.
+        Explica al usuario para qué sirve esta sección.
+      -->
+      <p class="favorites-hero__description">
+        Aquí puedes revisar los celulares que has guardado para compararlos o consultarlos más tarde.
+      </p>
+    </div>
+  </section>
+
+  <!-- 
+    Contenido principal de la vista.
+    Aquí se manejan los distintos estados:
+    - carga
+    - error
+    - lista vacía
+    - lista con productos favoritos
+  -->
+  <section class="favorites-section">
+
+    <!-- 
+      Estado de carga.
+      Se muestra mientras el componente está consultando
+      y preparando la lista de productos favoritos.
+    -->
+    @if (loading()) {
+      <div class="favorites-state-card">
+        <p>Cargando tus favoritos...</p>
+      </div>
+    }
+
+    <!-- 
+      Estado de error.
+      Se muestra si ocurre algún problema al cargar
+      la información de los favoritos.
+    -->
+    @if (errorMessage()) {
+      <div class="favorites-state-card favorites-state-card--error">
+        <p>{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <!-- 
+      Estado vacío.
+      Se muestra cuando:
+      - ya no está cargando
+      - no hay error
+      - y la cantidad de favoritos es 0
+      
+      Este bloque orienta al usuario para que vaya al catálogo
+      y comience a guardar productos.
+    -->
+    @if (!loading() && !errorMessage() && getFavoriteCount() === 0) {
+      <div class="favorites-empty">
+
+        <!-- 
+          Ícono visual decorativo del estado vacío.
+          Usa un corazón para representar la idea de favoritos.
+        -->
+        <div class="favorites-empty__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+          </svg>
+        </div>
+
+        <!-- 
+          Título del mensaje de lista vacía.
+        -->
+        <h2 class="favorites-empty__title">Aún no has guardado favoritos</h2>
+
+        <!-- 
+          Texto explicativo para invitar al usuario
+          a explorar y guardar productos.
+        -->
+        <p class="favorites-empty__description">
+          Explora el catálogo y marca los productos que más te interesen para revisarlos después.
+        </p>
+
+        <!-- 
+          Acciones disponibles cuando no hay favoritos.
+          Se ofrecen dos rutas:
+          - ir al catálogo
+          - volver al inicio
+        -->
+        <div class="favorites-empty__actions">
+          <a class="favorites-button favorites-button--primary" routerLink="/catalog">
+            Ir al catálogo
+          </a>
+
+          <a class="favorites-button favorites-button--secondary" routerLink="/home">
+            Volver al inicio
+          </a>
+        </div>
+      </div>
+    }
+
+    <!-- 
+      Estado con datos.
+      Se muestra cuando:
+      - ya no está cargando
+      - no hay error
+      - y sí existen productos favoritos guardados
+    -->
+    @if (!loading() && !errorMessage() && getFavoriteCount() > 0) {
+
+      <!-- 
+        Barra superior de control de favoritos.
+        Muestra:
+        - título de la sección
+        - cantidad de productos guardados
+        - botón para vaciar toda la lista
+      -->
+      <div class="favorites-toolbar">
+        <div>
+
+          <!-- 
+            Título secundario de la sección de productos guardados.
+          -->
+          <h2 class="favorites-toolbar__title">Productos guardados</h2>
+
+          <!-- 
+            Subtítulo dinámico con la cantidad de favoritos.
+            También maneja singular y plural para que el texto
+            se vea más natural.
+          -->
+          <p class="favorites-toolbar__subtitle">
+            {{ getFavoriteCount() }}
+            {{ getFavoriteCount() === 1 ? 'producto guardado' : 'productos guardados' }}
+          </p>
+        </div>
+
+        <!-- 
+          Botón para vaciar completamente la lista de favoritos.
+          Llama al método clearFavorites() del componente.
+        -->
+        <button
+          class="favorites-toolbar__clear"
+          type="button"
+          (click)="clearFavorites()"
+        >
+          Vaciar favoritos
+        </button>
+      </div>
+
+      <!-- 
+        Grilla principal de productos favoritos.
+        Aquí se renderiza una tarjeta por cada producto guardado.
+      -->
+      <div class="favorites-grid">
+
+        <!-- 
+          Recorre la lista reactiva de productos favoritos.
+          Se usa track getProductId(product) para optimizar el renderizado
+          y ayudar a Angular a identificar correctamente cada elemento.
+        -->
+        @for (product of favoriteProducts(); track getProductId(product)) {
+          <article class="favorites-card">
+
+            <!-- 
+              Bloque clickeable de la imagen del producto.
+              Redirige al detalle del producto seleccionado.
+            -->
+            <a
+              class="favorites-card__image-wrapper"
+              [routerLink]="['/product', getProductId(product)]"
+            >
+
+              <!-- 
+                Etiqueta visual que muestra la marca del producto.
+              -->
+              <span class="favorites-card__badge">
+                {{ getProductBrand(product) }}
+              </span>
+
+              <!-- 
+                Botón para eliminar un producto específico de favoritos.
+                
+                Importante:
+                Se pasa $event al método removeFavorite para evitar
+                que el clic en este botón active la navegación del enlace padre.
+              -->
+              <button
+                class="favorites-card__remove"
+                type="button"
+                (click)="removeFavorite(product, $event)"
+                aria-label="Quitar de favoritos"
+                title="Quitar de favoritos"
+              >
+
+                <!-- 
+                  Ícono visual del botón de eliminar de favoritos.
+                -->
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+                </svg>
+              </button>
+
+              <!-- 
+                Imagen principal del producto favorito.
+                La ruta y el texto alternativo se obtienen de forma dinámica
+                usando los helpers del componente.
+              -->
+              <img
+                class="favorites-card__image"
+                [src]="getProductImage(product)"
+                [alt]="getProductName(product)"
+              />
+            </a>
+
+            <!-- 
+              Cuerpo textual de la tarjeta del producto.
+            -->
+            <div class="favorites-card__body">
+
+              <!-- 
+                Nombre completo del producto.
+              -->
+              <h3 class="favorites-card__title">
+                {{ getProductName(product) }}
+              </h3>
+
+              <!-- 
+                Descripción corta del producto.
+                Se obtiene con un helper que también controla el recorte
+                del texto si es muy largo.
+              -->
+              <p class="favorites-card__description">
+                {{ getProductShortDescription(product) }}
+              </p>
+
+              <!-- 
+                Pie de la tarjeta.
+                Contiene el precio formateado y un botón para ver el detalle.
+              -->
+              <div class="favorites-card__footer">
+                <span class="favorites-card__price">
+                  {{ formatPrice(getProductPrice(product)) }}
+                </span>
+
+                <!-- 
+                  Enlace al detalle del producto.
+                -->
+                <a
+                  class="favorites-card__button"
+                  [routerLink]="['/product', getProductId(product)]"
+                >
+                  Ver detalle
+                </a>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</section>
