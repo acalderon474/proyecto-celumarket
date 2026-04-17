@@ -73,7 +73,20 @@ export class Catalog implements OnInit {
   brands = signal<string[]>([]);
 
   /*
+    Signal reactiva que almacena los IDs
+    de los productos marcados como favoritos.
+  */ 
+  favoriteIds = signal<number[]>([]);
+
+  /*
+    Clave centralizada para localStorage.
+    Debe coincidir con Home, Favorites y Header.
+  */
+  private readonly storageKey = 'favorites';
+
+  /*
     Inyectamos ActivatedRoute para poder leer la URL
+    y detectar si llega el parámetro ?brand=
   */
   private route = inject(ActivatedRoute);
 
@@ -85,12 +98,17 @@ export class Catalog implements OnInit {
 
   /*
     Método del ciclo de vida que se ejecuta al iniciar el componente.
-    Carga todos los productos del catálogo.
+    1. Carga todos los productos del catálogo.
+    2. Carga los favoritos guardados.
+    3. Escucha si la URL trae el parámetro ?brand=
   */
   ngOnInit(): void {
     this.loadProducts();
+    this.loadFavorites();
   
-  /* Eschuchamos si la URL trae el parámetro '?brand='
+  /* 
+    Eschuchamos si la URL trae el parámetro '?brand='
+    para activar automáticamente el filtro por marca.
   */
   this.route.queryParams.subscribe(params => {
     const brandFromUrl = params['brand'];
@@ -126,6 +144,77 @@ export class Catalog implements OnInit {
           this.loading.set(false);
         }
       });
+  }
+
+  /*
+    Lee los IDs favoritos guardados en localStorage.
+    Esto permite que el catálogo abra con los corazones
+    correctamente marcados si el usuario ya había guardado productos.
+  */
+  private loadFavorites(): void {
+    const storedFavorites = localStorage.getItem(this.storageKey);
+
+    if (!storedFavorites) {
+      this.favoriteIds.set([]);
+      return;
+    }
+
+    try {
+      const parsedFavorites = JSON.parse(storedFavorites);
+
+      if (Array.isArray(parsedFavorites)) {
+        const normalizedIds = parsedFavorites
+          .map(id => Number(id))
+          .filter(id => !Number.isNaN(id));
+
+        this.favoriteIds.set(normalizedIds);
+      } else {
+        this.favoriteIds.set([]);
+      }
+    } catch {
+      this.favoriteIds.set([]);
+    }
+  }
+
+  /*
+    Guarda los favoritos actualizados en localStorage
+    y notifica a otros componentes, por ejemplo al Header,
+    para que refresque el contador de favoritos.
+  */
+  private persistFavorites(): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.favoriteIds()));
+
+    /*
+      Evento personalizado para que el Header
+      actualice el contador al instante.
+    */
+    window.dispatchEvent(new CustomEvent('favorites-updated'));
+  }
+
+  /*
+    Agrega o quita un producto de favoritos.
+    Se usa desde el botón corazón dentro de cada card.
+  */
+  toggleFavorite(product: Product, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const exists = this.favoriteIds().includes(product.id);
+
+    const updatedIds = exists
+      ? this.favoriteIds().filter(id => id !== product.id)
+      : [...this.favoriteIds(), product.id];
+
+    this.favoriteIds.set(updatedIds);
+    this.persistFavorites();
+  }
+
+  /*
+    Verifica si un producto ya está marcado como favorito.
+    Sirve para aplicar clases activas al corazón.
+  */
+  isFavorite(product: Product): boolean {
+    return this.favoriteIds().includes(product.id);
   }
 
   /*
@@ -257,6 +346,55 @@ export class Catalog implements OnInit {
   */
   totalFilteredProducts(): number {
     return this.filteredProducts().length;
+  }
+
+  /*
+    Devuelve el ID del producto.
+  */
+  getProductId(product: Product): number {
+    return product.id;
+  }
+
+  /*
+    Devuelve el nombre completo del producto.
+  */
+  getProductName(product: Product): string {
+    return `${product.brand} ${product.model}`.trim();
+  }
+
+  /*
+    Devuelve la marca del producto.
+  */
+  getProductBrand(product: Product): string {
+    return product.brand;
+  }
+
+  /*
+    Devuelve la imagen del producto.
+  */
+  getProductImage(product: Product): string {
+    return product.image || 'assets/images/placeholder-phone.png';
+  }
+
+  /*
+    Devuelve una descripción corta del producto
+    para no saturar visualmente las cards.
+  */
+  getProductShortDescription(product: Product): string {
+    const description =
+      product.description ||
+      'Consulta este smartphone en detalle y compáralo con otras opciones del catálogo.';
+
+    return description.length > 85
+      ? `${description.slice(0, 82)}...`
+      : description;
+  }
+
+  /*
+    Devuelve el precio del producto.
+  */
+  getProductPrice(product: Product): number {
+    return Number(product.price) || 0;
   }
 
   /*

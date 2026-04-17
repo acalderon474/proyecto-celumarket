@@ -1,5 +1,5 @@
 /* =========================================================
-   PÁGINA GENERAL DEL CATÁLOGO
+    PÁGINA GENERAL DEL CATÁLOGO
    ========================================================= */
 .catalog-page {
   min-height: 100vh;
@@ -7,7 +7,7 @@
 }
 
 /* =========================================================
-   ENCABEZADO DEL CATÁLOGO
+    ENCABEZADO DEL CATÁLOGO
    ========================================================= */
 .catalog-header {
   padding: 4rem 1.5rem 2.8rem;
@@ -51,7 +51,7 @@
 }
 
 /* =========================================================
-   CONTENIDO PRINCIPAL
+    CONTENIDO PRINCIPAL
    ========================================================= */
 .catalog-content {
   max-width: 1280px;
@@ -64,7 +64,7 @@
 }
 
 /* =========================================================
-   PANEL LATERAL DE FILTROS
+    PANEL LATERAL DE FILTROS
    ========================================================= */
 .filters-catalog {
   width: 100%;
@@ -140,7 +140,7 @@
 }
 
 /* =========================================================
-   SECCIÓN DE PRODUCTOS
+    SECCIÓN DE PRODUCTOS
    ========================================================= */
 .catalog-products {
   width: 100%;
@@ -179,7 +179,7 @@
 }
 
 /* =========================================================
-   ESTADOS DEL CATÁLOGO
+    ESTADOS DEL CATÁLOGO
    ========================================================= */
 .catalog-state {
   background: #ffffff;
@@ -220,8 +220,8 @@
 }
 
 /* =========================================================
-   GRILLA DE PRODUCTOS
-   4 PRODUCTOS POR FILA EN PANTALLAS AMPLIAS
+    GRILLA DE PRODUCTOS
+    4 PRODUCTOS POR FILA EN PANTALLAS AMPLIAS
    ========================================================= */
 .catalog-products-grid {
   display: grid;
@@ -230,7 +230,7 @@
 }
 
 /* =========================================================
-   TARJETA DE PRODUCTO
+    TARJETA DE PRODUCTO
    ========================================================= */
 .catalog-product-card {
   display: flex;
@@ -271,6 +271,53 @@
   font-weight: 800;
   letter-spacing: 0.02em;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+    BOTÓN DE FAVORITOS EN LA TARJETA
+   ========================================================= */
+.catalog-product-card__favorite {
+  position: absolute;                     /* Lo ubica dentro de la imagen */
+  top: 12px;                              /* Separación desde arriba */
+  right: 12px;                            /* Separación desde la derecha */
+  z-index: 2;                             /* Queda por encima de la imagen */
+  width: 36px;                            /* Tamaño del botón */
+  height: 36px;                           /* Tamaño del botón */
+  border: none;                           /* Sin borde nativo */
+  border-radius: 999px;                   /* Forma circular */
+  background: rgba(255, 255, 255, 0.95);  /* Fondo claro */
+  display: inline-flex;                   /* Permite centrar el ícono */
+  align-items: center;                    /* Centrado vertical */
+  justify-content: center;                /* Centrado horizontal */
+  cursor: pointer;                        /* Cursor de clic */
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.catalog-product-card__favorite:hover {
+  transform: translateY(-2px);            /* Efecto sutil al pasar el cursor */
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.14);
+}
+
+.catalog-product-card__favorite svg {
+  width: 18px;                            /* Tamaño del corazón */
+  height: 18px;
+  stroke: #64748b;                        /* Color base gris */
+  fill: none;                             /* Sin relleno por defecto */
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s ease, fill 0.2s ease;
+}
+
+/* Estado activo cuando el producto ya es favorito */
+.catalog-product-card__favorite.active svg {
+  stroke: #7c3aed;                        /* Morado coherente con tu paleta */
+  fill: rgba(124, 58, 237, 0.16);         /* Relleno suave */
 }
 
 .catalog-product-card__image {
@@ -349,16 +396,16 @@
 }
 
 /* =========================================================
-   PAGINACIÓN
-   Se apoya en las clases de Bootstrap:
-   - pagination
-   - page-item
-   - page-link
+    PAGINACIÓN
+    Se apoya en las clases de Bootstrap:
+    - pagination
+    - page-item
+    - page-link
 
-   Aquí se personaliza para:
-   - bordes redondeados
-   - apariencia más moderna
-   - hover azul
+    Aquí se personaliza para:
+    - bordes redondeados
+    - apariencia más moderna
+    - hover azul
    ========================================================= */
 .catalog-pagination-wrapper {
   margin-top: 2rem;
@@ -419,7 +466,7 @@
 }
 
 /* =========================================================
-   AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
+    AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
    ========================================================= */
 .filters-catalog .btn,
 .catalog-state .btn {
@@ -436,7 +483,7 @@
 }
 
 /* =========================================================
-   RESPONSIVE
+    RESPONSIVE
    ========================================================= */
 @media (max-width: 1200px) {
   .catalog-products-grid {
