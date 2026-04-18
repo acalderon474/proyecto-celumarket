@@ -1,23 +1,24 @@
 /* =========================================================
-    PÁGINA GENERAL DEL CATÁLOGO
+   PÁGINA GENERAL DEL CATÁLOGO
    ========================================================= */
 .catalog-page {
-  min-height: 100vh;
+  width: 100%;
   background: #f8fafc;
 }
 
 /* =========================================================
-    ENCABEZADO DEL CATÁLOGO
+   ENCABEZADO DEL CATÁLOGO
    ========================================================= */
 .catalog-header {
-  padding: 4rem 1.5rem 2.8rem;
+  padding: 3.4rem 0.5rem 2.5rem;
   background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
   color: #ffffff;
 }
 
 .catalog-header__content {
-  max-width: 1200px;
+  max-width: 1780px;
   margin: 0 auto;
+  padding: 0 0.5rem;
   text-align: center;
 }
 
@@ -51,20 +52,20 @@
 }
 
 /* =========================================================
-    CONTENIDO PRINCIPAL
+   CONTENIDO PRINCIPAL
    ========================================================= */
 .catalog-content {
-  max-width: 1280px;
+  max-width: 1780px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 1.6rem 0.5rem 0.8rem;
   display: grid;
-  grid-template-columns: 290px 1fr;
+  grid-template-columns: 270px minmax(0, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
 
 /* =========================================================
-    PANEL LATERAL DE FILTROS
+   PANEL LATERAL DE FILTROS
    ========================================================= */
 .filters-catalog {
   width: 100%;
@@ -74,7 +75,7 @@
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 1.5rem;
-  padding: 1.4rem;
+  padding: 1.35rem;
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
   position: sticky;
   top: 95px;
@@ -88,7 +89,7 @@
 }
 
 .filters-catalog__card p {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.2rem;
   color: #475569;
   font-size: 0.96rem;
   line-height: 1.6;
@@ -140,10 +141,11 @@
 }
 
 /* =========================================================
-    SECCIÓN DE PRODUCTOS
+   SECCIÓN DE PRODUCTOS
    ========================================================= */
 .catalog-products {
   width: 100%;
+  min-width: 0;
 }
 
 .catalog-products__top {
@@ -151,19 +153,19 @@
   justify-content: space-between;
   align-items: end;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .catalog-products__title {
   margin: 0 0 0.35rem;
-  font-size: 1.7rem;
+  font-size: 1.95rem;
   font-weight: 800;
   color: #0f172a;
 }
 
 .catalog-products__count {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #475569;
 }
@@ -179,7 +181,7 @@
 }
 
 /* =========================================================
-    ESTADOS DEL CATÁLOGO
+   ESTADOS DEL CATÁLOGO
    ========================================================= */
 .catalog-state {
   background: #ffffff;
@@ -220,17 +222,18 @@
 }
 
 /* =========================================================
-    GRILLA DE PRODUCTOS
-    4 PRODUCTOS POR FILA EN PANTALLAS AMPLIAS
+   GRILLA DE PRODUCTOS
+   4 PRODUCTOS POR FILA APROVECHANDO MEJOR EL ANCHO
    ========================================================= */
 .catalog-products-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 1.45rem;
+  align-items: stretch;
 }
 
 /* =========================================================
-    TARJETA DE PRODUCTO
+   TARJETA DE PRODUCTO
    ========================================================= */
 .catalog-product-card {
   display: flex;
@@ -253,7 +256,7 @@
   position: relative;
   display: block;
   background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 3.05;
   overflow: hidden;
   text-decoration: none;
 }
@@ -274,22 +277,22 @@
 }
 
 /* =========================================================
-    BOTÓN DE FAVORITOS EN LA TARJETA
+   BOTÓN DE FAVORITOS EN LA TARJETA
    ========================================================= */
 .catalog-product-card__favorite {
-  position: absolute;                     /* Lo ubica dentro de la imagen */
-  top: 12px;                              /* Separación desde arriba */
-  right: 12px;                            /* Separación desde la derecha */
-  z-index: 2;                             /* Queda por encima de la imagen */
-  width: 36px;                            /* Tamaño del botón */
-  height: 36px;                           /* Tamaño del botón */
-  border: none;                           /* Sin borde nativo */
-  border-radius: 999px;                   /* Forma circular */
-  background: rgba(255, 255, 255, 0.95);  /* Fondo claro */
-  display: inline-flex;                   /* Permite centrar el ícono */
-  align-items: center;                    /* Centrado vertical */
-  justify-content: center;                /* Centrado horizontal */
-  cursor: pointer;                        /* Cursor de clic */
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10);
   transition:
     transform 0.2s ease,
@@ -298,26 +301,25 @@
 }
 
 .catalog-product-card__favorite:hover {
-  transform: translateY(-2px);            /* Efecto sutil al pasar el cursor */
+  transform: translateY(-2px);
   background: #ffffff;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.14);
 }
 
 .catalog-product-card__favorite svg {
-  width: 18px;                            /* Tamaño del corazón */
+  width: 18px;
   height: 18px;
-  stroke: #64748b;                        /* Color base gris */
-  fill: none;                             /* Sin relleno por defecto */
+  stroke: #64748b;
+  fill: none;
   stroke-width: 1.9;
   stroke-linecap: round;
   stroke-linejoin: round;
   transition: stroke 0.2s ease, fill 0.2s ease;
 }
 
-/* Estado activo cuando el producto ya es favorito */
 .catalog-product-card__favorite.active svg {
-  stroke: #7c3aed;                        /* Morado coherente con tu paleta */
-  fill: rgba(124, 58, 237, 0.16);         /* Relleno suave */
+  stroke: #7c3aed;
+  fill: rgba(124, 58, 237, 0.16);
 }
 
 .catalog-product-card__image {
@@ -325,20 +327,20 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .catalog-product-card__body {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  padding: 1rem;
+  gap: 0.8rem;
+  padding: 1.15rem;
   flex: 1;
 }
 
 .catalog-product-card__brand {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -347,7 +349,7 @@
 
 .catalog-product-card__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.08rem;
   font-weight: 800;
   color: #111827;
   line-height: 1.35;
@@ -356,9 +358,9 @@
 .catalog-product-card__description {
   margin: 0;
   color: #6b7280;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  min-height: 4.1rem;
+  font-size: 0.91rem;
+  line-height: 1.6;
+  min-height: 4.8rem;
 }
 
 .catalog-product-card__footer {
@@ -371,7 +373,7 @@
 
 .catalog-product-card__price {
   color: #1d4ed8;
-  font-size: 1.02rem;
+  font-size: 1.1rem;
   font-weight: 800;
 }
 
@@ -381,10 +383,10 @@
   justify-content: center;
   text-decoration: none;
   border-radius: 999px;
-  padding: 0.6rem 0.95rem;
+  padding: 0.62rem 1rem;
   background: linear-gradient(135deg, #4f5cf0, #7c3aed);
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   white-space: nowrap;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -396,19 +398,10 @@
 }
 
 /* =========================================================
-    PAGINACIÓN
-    Se apoya en las clases de Bootstrap:
-    - pagination
-    - page-item
-    - page-link
-
-    Aquí se personaliza para:
-    - bordes redondeados
-    - apariencia más moderna
-    - hover azul
+   PAGINACIÓN
    ========================================================= */
 .catalog-pagination-wrapper {
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .catalog-pagination-wrapper .pagination {
@@ -446,7 +439,7 @@
 .catalog-pagination-wrapper .page-item .page-link:hover {
   background: #eff6ff;
   border-color: #93c5fd;
-  color: #2563eb; /* número azul al pasar el cursor */
+  color: #2563eb;
 }
 
 .catalog-pagination-wrapper .page-item.active .page-link {
@@ -466,7 +459,7 @@
 }
 
 /* =========================================================
-    AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
+   AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
    ========================================================= */
 .filters-catalog .btn,
 .catalog-state .btn {
@@ -483,8 +476,18 @@
 }
 
 /* =========================================================
-    RESPONSIVE
+   RESPONSIVE
    ========================================================= */
+@media (max-width: 1600px) {
+  .catalog-content {
+    max-width: 1500px;
+  }
+
+  .catalog-products-grid {
+    grid-template-columns: repeat(4, minmax(230px, 1fr));
+  }
+}
+
 @media (max-width: 1200px) {
   .catalog-products-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -512,11 +515,11 @@
 
 @media (max-width: 576px) {
   .catalog-header {
-    padding: 3.2rem 1rem 2.2rem;
+    padding: 3rem 0.75rem 2rem;
   }
 
   .catalog-content {
-    padding: 1.5rem 1rem 3rem;
+    padding: 1.35rem 0.75rem 0.9rem;
   }
 
   .filters-catalog__card {
