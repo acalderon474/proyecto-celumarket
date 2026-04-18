@@ -164,7 +164,7 @@
   {
     "id": 10,
     "brand": "Apple",
-    "model": "iPhone SE (4ta Gen)",
+    "model": "iPhone SE - 4ta Gen",
     "price": 2800000,
     "image": "assets/images/iphone-se4.png",
     "description": "El diseño moderno del iPhone 14 con la potencia del chip A18.",
@@ -222,7 +222,7 @@
     "price": 2100000,
     "image": "assets/images/moto-edge-60f.png",
     "description": "Equilibrio perfecto entre diseño premium y precio competitivo.",
-    "screen": "6.7\" pOLED 144Hz",
+    "screen": "6.7\" OLED 144Hz",
     "processor": "Dimensity 8400",
     "ram": "8GB",
     "storage": "256GB",

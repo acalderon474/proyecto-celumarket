@@ -1,5 +1,5 @@
 /* =========================================================
-   PÁGINA GENERAL DEL CATÁLOGO
+    PÁGINA GENERAL DEL CATÁLOGO
    ========================================================= */
 .catalog-page {
   width: 100%;
@@ -7,7 +7,7 @@
 }
 
 /* =========================================================
-   ENCABEZADO DEL CATÁLOGO
+    ENCABEZADO DEL CATÁLOGO
    ========================================================= */
 .catalog-header {
   padding: 3.4rem 0.5rem 2.5rem;
@@ -52,7 +52,7 @@
 }
 
 /* =========================================================
-   CONTENIDO PRINCIPAL
+    CONTENIDO PRINCIPAL
    ========================================================= */
 .catalog-content {
   max-width: 1780px;
@@ -65,7 +65,7 @@
 }
 
 /* =========================================================
-   PANEL LATERAL DE FILTROS
+    PANEL LATERAL DE FILTROS
    ========================================================= */
 .filters-catalog {
   width: 100%;
@@ -141,7 +141,7 @@
 }
 
 /* =========================================================
-   SECCIÓN DE PRODUCTOS
+    SECCIÓN DE PRODUCTOS
    ========================================================= */
 .catalog-products {
   width: 100%;
@@ -181,7 +181,7 @@
 }
 
 /* =========================================================
-   ESTADOS DEL CATÁLOGO
+    ESTADOS DEL CATÁLOGO
    ========================================================= */
 .catalog-state {
   background: #ffffff;
@@ -222,8 +222,8 @@
 }
 
 /* =========================================================
-   GRILLA DE PRODUCTOS
-   4 PRODUCTOS POR FILA APROVECHANDO MEJOR EL ANCHO
+    GRILLA DE PRODUCTOS
+    4 PRODUCTOS POR FILA APROVECHANDO MEJOR EL ANCHO
    ========================================================= */
 .catalog-products-grid {
   display: grid;
@@ -233,7 +233,7 @@
 }
 
 /* =========================================================
-   TARJETA DE PRODUCTO
+    TARJETA DE PRODUCTO
    ========================================================= */
 .catalog-product-card {
   display: flex;
@@ -277,7 +277,7 @@
 }
 
 /* =========================================================
-   BOTÓN DE FAVORITOS EN LA TARJETA
+    BOTÓN DE FAVORITOS EN LA TARJETA
    ========================================================= */
 .catalog-product-card__favorite {
   position: absolute;
@@ -398,7 +398,7 @@
 }
 
 /* =========================================================
-   PAGINACIÓN
+    PAGINACIÓN
    ========================================================= */
 .catalog-pagination-wrapper {
   margin-top: 1.6rem;
@@ -459,7 +459,7 @@
 }
 
 /* =========================================================
-   AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
+    AJUSTES DE BOOTSTRAP EN BOTONES DEL CATÁLOGO
    ========================================================= */
 .filters-catalog .btn,
 .catalog-state .btn {
@@ -476,7 +476,7 @@
 }
 
 /* =========================================================
-   RESPONSIVE
+    RESPONSIVE
    ========================================================= */
 @media (max-width: 1600px) {
   .catalog-content {
