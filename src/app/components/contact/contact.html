@@ -1,1 +1,240 @@
-<p>contact works!</p>
+<!--
+    Contenedor principal de la vista Contacto.
+    Incluye:
+    1. Encabezado de la sección
+    2. Información de contacto
+    3. Formulario validado
+-->
+<main class="contact-page">
+
+    <!--
+    Encabezado principal de la vista.
+    Mantiene la identidad visual del proyecto.
+    -->
+    <section class="contact-hero">
+        <div class="contact-hero__content">
+
+            <h1 class="contact-hero__title">Contáctanos</h1>
+
+            <p class="contact-hero__description">
+                ¿Tienes alguna pregunta? Estamos aquí para ayudarte.
+            </p>
+        </div>
+    </section>
+
+    <!--
+    Contenido principal.
+    Se divide en dos columnas:
+    - información de contacto
+    - formulario
+    -->
+    <section class="contact-content">
+
+        <!-- Columna izquierda: información -->
+        <article class="contact-info">
+            <h2 class="contact-info__title">Hablemos</h2>
+
+            <p class="contact-info__text">
+                Puedes escribirnos para solicitar información sobre equipos, disponibilidad,
+                precios, colores o recomendaciones según tu presupuesto.
+            </p>
+
+            <!-- Contexto opcional desde otra vista -->
+            @if (contactContext()) {
+            <div class="contact-info__context">
+                {{ contactContext() }}
+            </div>
+            }
+
+            <div class="contact-info__cards">
+                <div class="contact-info__card">
+                    <span class="contact-info__icon">✉</span>
+                    <div>
+                        <h3>Correo</h3>
+                        <p class= "contact-info__highlight">info@celumarket.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-info__card">
+                    <span class="contact-info__icon">☎</span>
+                    <div>
+                        <h3>Teléfono</h3>
+                        <p class="contact-info__highlight">+57 323 123 4567</p>
+                    </div>
+                </div>
+
+                <div class="contact-info__card">
+                    <span class="contact-info__icon">📍</span>
+                    <div>
+                        <h3>Ubicación</h3>
+                        <p class="contact-info__highlight">Bogotá</p>
+                        <p>Colombia</p>
+                    </div>
+                </div>
+            </div>
+
+    <!--
+        Tarjeta de horario de atención.
+        Se ubica debajo de las tarjetas informativas,
+        como en la imagen de referencia.
+    -->
+            <div class="contact-schedule">
+                <div class="contact-schedule__header">
+                    <span class="contact-schedule__icon">◷</span>
+                    <h3 class="contact-schedule__title">Horario de Atención</h3>
+                </div>
+
+                <div class="contact-schedule__list">
+                    @for (item of officeHours; track item.label) {
+                    <p class="contact-schedule__item">
+                        <span class="contact-schedule__label">{{ item.label }}:</span>
+                        <span class="contact-schedule__value">{{ item.value }}</span>
+                    </p>
+                    }
+                </div>
+            </div>
+
+        </article>
+
+        <!-- Columna derecha: formulario -->
+        <article class="contact-form-wrapper">
+            <h2 class="contact-form-wrapper__title">Formulario de contacto</h2>
+
+            <p class="contact-form-wrapper__subtitle">
+                Completa los siguientes datos y te responderemos lo más pronto posible.
+            </p>
+
+            <!-- Mensaje de éxito -->
+            @if (submitSuccess()) {
+            <div class="contact-alert contact-alert--success">
+                <h3 class="contact-alert__title">
+                    {{ successTitle() }}
+                </h3>
+
+                <p class="contact-alert__text">
+                    {{ successMessage() }}
+                </p>
+            </div>
+            }
+
+            <!--
+        Formulario principal.
+        Usa template-driven forms porque es simple,
+        claro y suficiente para esta vista.
+    -->
+            <form #contactForm="ngForm" class="contact-form" (ngSubmit)="submitForm(contactForm)">
+
+                <!-- Nombre -->
+                <div class="contact-form__group">
+                    <label for="name" class="contact-form__label">Nombre completo</label>
+
+                    <input id="name" name="name" type="text" class="contact-form__control" [(ngModel)]="formData.name"
+                        #name="ngModel" required minlength="3" placeholder="Ingresa tu nombre completo" />
+
+                    @if (name.invalid && name.touched) {
+                    <small class="contact-form__error">
+                        El nombre es obligatorio y debe tener al menos 3 caracteres.
+                    </small>
+                    }
+                </div>
+
+                <!-- Correo -->
+                <div class="contact-form__group">
+                    <label for="email" class="contact-form__label">Correo electrónico</label>
+
+                    <input id="email" name="email" type="email" class="contact-form__control"
+                        [(ngModel)]="formData.email" #email="ngModel" required email placeholder="ejemplo@correo.com" />
+
+                    @if (email.invalid && email.touched) {
+                    <small class="contact-form__error">
+                        Debes ingresar un correo electrónico válido.
+                    </small>
+                    }
+                </div>
+
+                <!-- Teléfono -->
+                <div class="contact-form__group">
+                    <label for="phone" class="contact-form__label">Teléfono</label>
+
+                    <input id="phone" name="phone" type="tel" class="contact-form__control" [(ngModel)]="formData.phone"
+                        #phone="ngModel" required pattern="^[0-9+\s()-]{7,20}$"
+                        placeholder="Ingresa tu número de teléfono" />
+
+                    @if (phone.invalid && phone.touched) {
+                    <small class="contact-form__error">
+                        Debes ingresar un número válido.
+                    </small>
+                    }
+                </div>
+
+                <!-- Asunto -->
+                <div class="contact-form__group">
+                    <label for="subject" class="contact-form__label">Asunto</label>
+
+                    <input id="subject" name="subject" type="text" class="contact-form__control"
+                        [(ngModel)]="formData.subject" #subject="ngModel" required minlength="5"
+                        placeholder="Escribe el motivo de tu consulta" />
+
+                    @if (subject.invalid && subject.touched) {
+                    <small class="contact-form__error">
+                        El asunto es obligatorio y debe tener al menos 5 caracteres.
+                    </small>
+                    }
+                </div>
+
+                <!-- Mensaje -->
+                <div class="contact-form__group">
+                    <label for="message" class="contact-form__label">Mensaje</label>
+
+                    <textarea id="message" name="message" class="contact-form__control contact-form__control--textarea"
+                        [(ngModel)]="formData.message" #message="ngModel" required minlength="10" rows="5"
+                        placeholder="Cuéntanos en qué podemos ayudarte"></textarea>
+
+                    @if (message.invalid && message.touched) {
+                    <small class="contact-form__error">
+                        El mensaje es obligatorio y debe tener al menos 10 caracteres.
+                    </small>
+                    }
+                </div>
+
+                <!-- Botones -->
+                <div class="contact-form__actions">
+                    <button type="submit" class="contact-form__button contact-form__button--primary"
+                        [disabled]="isSubmitting()">
+                        {{ isSubmitting() ? 'Enviando...' : 'Enviar solicitud' }}
+                    </button>
+
+                    <button type="button" class="contact-form__button contact-form__button--secondary"
+                        (click)="resetForm(contactForm)">
+                        Limpiar formulario
+                    </button>
+                </div>
+            </form>
+        </article>
+    </section>
+
+<!--
+    Sección de preguntas frecuentes.
+    Se ubica debajo del formulario y del bloque principal,
+    como en la segunda imagen de referencia.
+-->
+    <section class="contact-faq">
+        <div class="contact-faq__container">
+            <h2 class="contact-faq__title">Preguntas Frecuentes</h2>
+
+            <div class="contact-faq__grid">
+                @for (faq of faqs; track faq.question) {
+                <article class="contact-faq__card">
+                    <h3 class="contact-faq__question">
+                        {{ faq.question }}
+                    </h3>
+
+                    <p class="contact-faq__answer">
+                        {{ faq.answer }}
+                    </p>
+                </article>
+                }
+            </div>
+        </div>
+    </section>
+</main>
