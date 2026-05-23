@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: ./api-productos
+      dockerfile: Dockerfile
+    container_name: celumarket-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - celumarket_net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celumarket_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - celumarket_net
+
+networks:
+  celumarket_net:
+    driver: bridge
