@@ -6,10 +6,9 @@
 /out-tsc
 /bazel-out
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Node dependencies
+node_modules/
+api-productos/node_modules/
 
 # IDEs and editors
 .idea/
@@ -29,7 +28,7 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Miscellaneous
+# Angular
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -38,6 +37,19 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+
+# Logs
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+pnpm-debug.log*
+
+# Docker / local environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # System files
 .DS_Store
