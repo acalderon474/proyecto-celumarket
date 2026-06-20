@@ -6,6 +6,7 @@ import { Catalog } from './components/catalog/catalog';
 import { ProductDetail } from './components/product-detail/product-detail';
 import { Contact } from './components/contact/contact';
 import { Favorites } from './components/favorites/favorites';
+import { Cart } from './components/cart/cart';
 
 export const routes: Routes = [
   // 1. Ruta por defecto: Redirige al Home al abrir la app
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'catalog', component: Catalog },
   { path: 'contact', component: Contact },
   { path: 'favorites', component: Favorites },
+  { path: 'cart', component: Cart},
 
   // 3. Ruta dinámica para el detalle (recibe el ID del celular)
   { path: 'product/:id', component: ProductDetail },
