@@ -1,12 +1,89 @@
 <section class="cart-container">
     <div class="cart-header">
-        <h1>Carrito de compras</h1>
-        <p>Revisa los productos seleccionados antes de finalizar tu compra.</p>
+        <div>
+            <h1>Carrito de compras</h1>
+            <p>Revisa los productos seleccionados antes de finalizar tu compra.</p>
+        </div>
+
+        <a routerLink="/catalog" class="btn-outline">Seguir comprando</a>
     </div>
 
-    <div class="empty-cart">
+    <div *ngIf="purchaseMessage" class="purchase-message">
+        {{ purchaseMessage }}
+    </div>
+
+    <div *ngIf="cartItems.length === 0 && !purchaseMessage" class="empty-cart">
         <h2>Tu carrito está vacío</h2>
         <p>Aún no has agregado productos al carrito.</p>
         <a routerLink="/catalog" class="btn-primary">Ver catálogo</a>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="cart-content">
+        <div class="cart-items">
+            <article class="cart-item" *ngFor="let item of cartItems">
+                <div class="product-image">
+                    <img [src]="item.product.image" [alt]="item.product.model" />
+                </div>
+
+                <div class="product-info">
+                    <span class="brand">{{ item.product.brand }}</span>
+                    <h2>{{ item.product.model }}</h2>
+                    <p>{{ item.product.description }}</p>
+                    <strong>{{ item.product.price | currency:'COP':'symbol':'1.0-0' }}</strong>
+                </div>
+
+                <div class="quantity-control">
+                    <button type="button" (click)="decreaseQuantity(item.product.id)">−</button>
+                    <span>{{ item.quantity }}</span>
+                    <button type="button" (click)="increaseQuantity(item.product.id)">+</button>
+                </div>
+
+                <div class="subtotal">
+                    <span>Subtotal</span>
+                    <strong>{{ getSubtotal(item) | currency:'COP':'symbol':'1.0-0' }}</strong>
+                </div>
+
+                <button type="button" class="remove-btn" (click)="removeItem(item.product.id)"
+                    aria-label="Eliminar producto">
+                    Eliminar
+                </button>
+            </article>
+        </div>
+
+        <aside class="cart-summary">
+            <h2>Resumen de compra</h2>
+
+            <div class="summary-row">
+                <span>Productos</span>
+                <strong>{{ getTotalItems() }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong>{{ getTotalPrice() | currency:'COP':'symbol':'1.0-0' }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Envío</span>
+                <strong>Gratis</strong>
+            </div>
+
+            <div class="summary-total">
+                <span>Total a pagar</span>
+                <strong>{{ getTotalPrice() | currency:'COP':'symbol':'1.0-0' }}</strong>
+            </div>
+
+            <button type="button" class="btn-primary full" (click)="completePurchase()">
+                Finalizar compra
+            </button>
+
+            <button type="button" class="btn-clear" (click)="clearCart()">
+                Vaciar carrito
+            </button>
+
+            <p class="payment-note">
+                Esta compra es una simulación académica. No se implementa pasarela de pagos.
+            </p>
+        </aside>
     </div>
 </section>
