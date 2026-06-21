@@ -70,7 +70,6 @@
       <!-- 
         Recorre el arreglo navItems para generar dinámicamente
         cada enlace del menú de navegación.
-        Se usa track item.route para optimizar el renderizado.
       -->
       @for (item of navItems; track item.route) {
         <a
@@ -155,12 +154,57 @@
         </svg>
 
         <!-- 
+          Texto visible solo en móvil.
+        -->
+        <span class="cm-favorites__text">Favoritos</span>
+
+        <!-- 
           Si la cantidad de favoritos es mayor que 0,
           se muestra un contador con ese valor.
         -->
         @if (favoriteCount() > 0) {
           <span class="cm-favorites__count">
             {{ favoriteCount() }}
+          </span>
+        }
+      </a>
+
+      <!-- 
+        Enlace fijo hacia el carrito de compras.
+        Se resalta cuando la ruta actual es /cart.
+      -->
+      <a
+        class="cm-cart"
+        routerLink="/cart"
+        [class.active]="isCartRoute()"
+        (click)="closeMenu()"
+        aria-label="Ir al carrito de compras"
+        title="Carrito de compras"
+      >
+        <!-- 
+          Ícono SVG del carrito de compras.
+        -->
+        <svg
+          class="cm-cart__icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="20" r="1.4"></circle>
+          <circle cx="18" cy="20" r="1.4"></circle>
+          <path d="M3.5 4h2l2.2 11.2c.2.9.9 1.5 1.8 1.5h7.8c.9 0 1.6-.6 1.8-1.4L21 8H7"></path>
+        </svg>
+
+        <!-- 
+          Texto visible en móvil para mejorar comprensión del menú.
+        -->
+        <span class="cm-cart__text">Carrito</span>
+
+        <!-- 
+          Si hay productos agregados, se muestra el contador.
+        -->
+        @if (cartCount() > 0) {
+          <span class="cm-cart__count">
+            {{ cartCount() }}
           </span>
         }
       </a>
