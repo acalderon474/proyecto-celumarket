@@ -110,6 +110,16 @@
         </div>
       </div>
 
+      <!-- 
+        Mensaje de confirmación del carrito.
+        Se muestra cuando el usuario agrega un producto al carrito.
+      -->
+      @if (cartMessage()) {
+        <div class="catalog-cart-message" role="status">
+          {{ cartMessage() }}
+        </div>
+      }
+
       <!-- Estado de carga -->
       @if (loading()) {
         <div class="catalog-state">
@@ -202,12 +212,26 @@
                     {{ formatPrice(product.price) }}
                   </span>
 
-                  <a
-                    class="catalog-product-card__button"
-                    [routerLink]="['/product', product.id]"
-                  >
-                    Ver más
-                  </a>
+                  <!-- 
+                    Acciones del producto.
+                    Permite ver el detalle o agregar el producto al carrito.
+                  -->
+                  <div class="catalog-product-card__actions">
+                    <a
+                      class="catalog-product-card__button"
+                      [routerLink]="['/product', product.id]"
+                    >
+                      Ver más
+                    </a>
+
+                    <button
+                      type="button"
+                      class="catalog-product-card__cart-button"
+                      (click)="addToCart(product, $event)"
+                    >
+                      Agregar al carrito
+                    </button>
+                  </div>
                 </div>
               </div>
             </article>

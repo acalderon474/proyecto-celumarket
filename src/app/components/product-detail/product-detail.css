@@ -544,3 +544,90 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================================
+    BOTÓN Y MENSAJE DEL CARRITO EN DETALLE
+   ========================================================= */
+
+/*
+  Mensaje visual que confirma cuando el producto
+  fue agregado correctamente al carrito.
+*/
+.product-detail-info__cart-message {
+    margin-top: 1.2rem;
+    border: 1px solid #a7f3d0;
+    background: #ecfdf5;
+    color: #047857;
+    border-radius: 1rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    box-shadow: 0 8px 22px rgba(4, 120, 87, 0.12);
+}
+
+/*
+  Botón principal para agregar el producto al carrito.
+*/
+.product-detail-info__button--cart {
+    background: #111827;
+    color: #ffffff;
+}
+
+.product-detail-info__button--cart:hover {
+    background: #1f2937;
+}
+
+.product-detail-info__button--cart:disabled {
+    background: #cbd5e1;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+    BOTÓN DE CARRITO EN PRODUCTOS RELACIONADOS
+   ========================================================= */
+
+/*
+    Contenedor para agrupar las acciones de las cards relacionadas.
+*/
+.product-detail-related-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+/*
+    Botón compacto para agregar relacionados al carrito.
+*/
+.product-detail-related-card__cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    padding: 0.46rem 0.72rem;
+    background: #111827;
+    color: #ffffff;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: fit-content;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
+}
+
+.product-detail-related-card__cart-button:hover {
+    transform: translateY(-2px);
+    background: #1f2937;
+    opacity: 0.96;
+}
+
+.product-detail-related-card__cart-button:disabled {
+    background: #cbd5e1;
+    color: #64748b;
+    cursor: not-allowed;
+    transform: none;
+}

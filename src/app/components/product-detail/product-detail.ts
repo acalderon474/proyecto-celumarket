@@ -5,6 +5,7 @@ import { take } from 'rxjs';
 
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 /*
   Decorador del componente ProductDetail.
@@ -23,7 +24,8 @@ import { ProductService } from '../../services/product.service';
   Componente ProductDetail.
   Se encarga de mostrar la información completa
   del producto seleccionado, permitir agregarlo
-  a favoritos y mostrar productos relacionados.
+  a favoritos, agregarlo al carrito y mostrar
+  productos relacionados.
 */
 export class ProductDetail implements OnInit {
   /*
@@ -55,6 +57,12 @@ export class ProductDetail implements OnInit {
   favoriteIds = signal<number[]>([]);
 
   /*
+    Signal reactiva para mostrar un mensaje breve
+    cuando un producto se agrega al carrito desde la vista detalle.
+  */
+  cartMessage = signal('');
+
+  /*
     Clave centralizada usada por toda la app
     para guardar favoritos en localStorage.
   */
@@ -65,6 +73,12 @@ export class ProductDetail implements OnInit {
     desde la URL actual.
   */
   private route = inject(ActivatedRoute);
+
+  /*
+    Inyectamos CartService para poder agregar productos
+    al carrito de compras desde la vista de detalle.
+  */
+  private cartService = inject(CartService);
 
   /*
     Constructor del componente.
@@ -104,6 +118,7 @@ export class ProductDetail implements OnInit {
   private loadProductDetail(productId: number): void {
     this.loading.set(true);
     this.errorMessage.set('');
+    this.cartMessage.set('');
 
     this.productService
       .getProducts()
@@ -197,6 +212,34 @@ export class ProductDetail implements OnInit {
 
     this.favoriteIds.set(updatedIds);
     this.persistFavorites();
+  }
+
+  /*
+    Agrega un producto al carrito de compras.
+    Si el producto ya existe, CartService incrementa la cantidad.
+    También se dispara un evento personalizado para que luego
+    el Header pueda actualizar el contador del carrito.
+  */
+  addToCart(product: Product, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (this.isOutOfStock(product)) {
+      this.cartMessage.set('Este producto no tiene stock disponible.');
+      return;
+    }
+
+    this.cartService.addToCart(product);
+
+    this.cartMessage.set(`${this.getProductName(product)} fue agregado al carrito.`);
+
+    window.dispatchEvent(new CustomEvent('cart-updated'));
+
+    setTimeout(() => {
+      this.cartMessage.set('');
+    }, 2500);
   }
 
   /*

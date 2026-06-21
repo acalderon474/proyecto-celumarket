@@ -128,6 +128,16 @@
           </div>
         </div>
 
+        <!-- 
+          Mensaje de confirmación del carrito.
+          Se muestra cuando el usuario agrega el producto al carrito.
+        -->
+        @if (cartMessage()) {
+          <div class="product-detail-info__cart-message" role="status">
+            {{ cartMessage() }}
+          </div>
+        }
+
         <!-- Acciones principales -->
         <div class="product-detail-info__actions">
           <button
@@ -136,6 +146,15 @@
             (click)="toggleFavorite(currentProduct, $event)"
           >
             {{ isFavorite(currentProduct) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
+          </button>
+
+          <button
+            class="product-detail-info__button product-detail-info__button--cart"
+            type="button"
+            [disabled]="isOutOfStock(currentProduct)"
+            (click)="addToCart(currentProduct, $event)"
+          >
+            Agregar al carrito
           </button>
 
           <a
@@ -244,12 +263,27 @@
                   {{ formatPrice(related.price) }}
                 </p>
 
-                <a
-                  class="product-detail-related-card__button"
-                  [routerLink]="['/product', related.id]"
-                >
-                  Ver más
-                </a>
+                <!-- 
+                  Acciones para productos relacionados.
+                  Permiten ver el detalle o agregar directamente al carrito.
+                -->
+                <div class="product-detail-related-card__actions">
+                  <a
+                    class="product-detail-related-card__button"
+                    [routerLink]="['/product', related.id]"
+                  >
+                    Ver más
+                  </a>
+
+                  <button
+                    class="product-detail-related-card__cart-button"
+                    type="button"
+                    [disabled]="isOutOfStock(related)"
+                    (click)="addToCart(related, $event)"
+                  >
+                    Agregar
+                  </button>
+                </div>
               </div>
             </article>
           }

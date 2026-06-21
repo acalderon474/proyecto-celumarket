@@ -6,6 +6,7 @@ import { take } from 'rxjs';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 /*
   Decorador del componente Catalog.
@@ -21,8 +22,9 @@ import { ActivatedRoute } from '@angular/router';
 
 /*
   Componente Catalog.
-  Se encarga de cargar, buscar, filtrar y paginar
-  todos los celulares disponibles del catálogo.
+  Se encarga de cargar, buscar, filtrar, paginar
+  y mostrar todos los celulares disponibles del catálogo.
+  Además, permite agregar productos al carrito de compras.
 */
 export class Catalog implements OnInit {
 
@@ -75,8 +77,14 @@ export class Catalog implements OnInit {
   /*
     Signal reactiva que almacena los IDs
     de los productos marcados como favoritos.
-  */ 
+  */
   favoriteIds = signal<number[]>([]);
+
+  /*
+    Signal reactiva para mostrar un mensaje breve
+    cuando un producto es agregado al carrito.
+  */
+  cartMessage = signal('');
 
   /*
     Clave centralizada para localStorage.
@@ -89,6 +97,12 @@ export class Catalog implements OnInit {
     y detectar si llega el parámetro ?brand=
   */
   private route = inject(ActivatedRoute);
+
+  /*
+    Inyectamos CartService para poder agregar productos
+    al carrito de compras desde el catálogo.
+  */
+  private cartService = inject(CartService);
 
   /*
     Constructor del componente.
@@ -105,19 +119,22 @@ export class Catalog implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
     this.loadFavorites();
-  
-  /* 
-    Eschuchamos si la URL trae el parámetro '?brand='
-    para activar automáticamente el filtro por marca.
-  */
-  this.route.queryParams.subscribe(params => {
-    const brandFromUrl = params['brand'];
-    if (brandFromUrl) {
-      
-      // Si viene una marca por la URL, activamos el filtro automáticamente
-      this.setSelectedBrand(brandFromUrl); 
-    }
-  });
+
+    /*
+      Escuchamos si la URL trae el parámetro '?brand='
+      para activar automáticamente el filtro por marca.
+    */
+    this.route.queryParams.subscribe(params => {
+      const brandFromUrl = params['brand'];
+
+      if (brandFromUrl) {
+        /*
+          Si viene una marca por la URL,
+          activamos el filtro automáticamente.
+        */
+        this.setSelectedBrand(brandFromUrl);
+      }
+    });
   }
 
   /*
@@ -207,6 +224,39 @@ export class Catalog implements OnInit {
 
     this.favoriteIds.set(updatedIds);
     this.persistFavorites();
+  }
+
+  /*
+    Agrega un producto al carrito de compras.
+    Si el producto ya existe en el carrito, el servicio aumenta la cantidad.
+    El evento evita que el clic del botón afecte otros enlaces o acciones
+    dentro de la tarjeta del producto.
+  */
+  addToCart(product: Product, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.cartService.addToCart(product);
+
+    /*
+      Mensaje breve para confirmar visualmente
+      que el producto fue agregado al carrito.
+    */
+    this.cartMessage.set(`${product.brand} ${product.model} fue agregado al carrito.`);
+
+    /*
+      Evento personalizado que podrá usarse después en el Header
+      para actualizar un contador de productos en el carrito.
+    */
+    window.dispatchEvent(new CustomEvent('cart-updated'));
+
+    /*
+      Limpia el mensaje después de unos segundos
+      para no saturar la interfaz.
+    */
+    setTimeout(() => {
+      this.cartMessage.set('');
+    }, 2500);
   }
 
   /*
