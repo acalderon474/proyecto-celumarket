@@ -6,6 +6,8 @@ pipeline {
             steps {
                 bat '''
                 git --version
+                node --version
+                npm --version
                 docker version
                 docker compose version
                 '''
@@ -33,15 +35,27 @@ pipeline {
             }
         }
 
-        stage('Instalar dependencias, probar y compilar frontend') {
+        stage('Instalar dependencias del frontend') {
             steps {
-                dir('frontend') {
-                    bat '''
-                    call npm install
-                    call npm test -- --watch=false
-                    call npm run build
-                    '''
-                }
+                bat '''
+                call npm install
+                '''
+            }
+        }
+
+        stage('Pruebas unitarias frontend') {
+            steps {
+                bat '''
+                call npm test -- --watch=false
+                '''
+            }
+        }
+
+        stage('Compilar frontend Angular') {
+            steps {
+                bat '''
+                call npm run build
+                '''
             }
         }
 
@@ -81,11 +95,11 @@ pipeline {
 
     post {
         success {
-            echo 'Proceso de integración continua finalizado correctamente.'
+            echo 'Proceso de integración continua finalizado correctamente. Los cambios de entrega-1-docker quedan aprobados para integrarse a master.'
         }
 
         failure {
-            echo 'El proceso de integración continua falló. Revisar consola de Jenkins.'
+            echo 'El proceso de integración continua falló. No se deben integrar cambios a master.'
             bat '''
             docker compose -p proyecto-celumarket logs --tail=100
             '''
