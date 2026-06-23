@@ -599,3 +599,76 @@
 .catalog-product-card__cart-button:active {
   transform: translateY(0);
 }
+
+/* =========================================================
+    PROMOCIÓN SAMSUNG EN CATÁLOGO
+   ========================================================= */
+
+/*
+  Badge promocional para productos Samsung.
+  Se muestra en la parte superior izquierda de la imagen.
+*/
+.catalog-product-card__promo-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: #0f766e;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22);
+}
+
+/*
+  Contenedor de precios cuando existe promoción.
+*/
+.catalog-product-card__price-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/*
+  Etiqueta del porcentaje de descuento.
+*/
+.catalog-product-card__discount-label {
+  width: fit-content;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/*
+  Precio original antes del descuento.
+  Se muestra tachado para evidenciar el valor anterior.
+*/
+.catalog-product-card__old-price {
+  color: #6b7280;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: line-through;
+}
+
+/*
+  Precio final con descuento aplicado.
+*/
+.catalog-product-card__price--discount {
+  color: #1d4ed8;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+/*
+  Texto del valor ahorrado.
+*/
+.catalog-product-card__saving {
+  color: #047857;
+  font-size: 0.8rem;
+  font-weight: 800;
+}

@@ -7,6 +7,7 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { PromotionService } from '../../services/promotion.service';
 
 /*
   Decorador del componente Catalog.
@@ -103,6 +104,12 @@ export class Catalog implements OnInit {
     al carrito de compras desde el catálogo.
   */
   private cartService = inject(CartService);
+
+  /*
+  Inyectamos PromotionService para aplicar la lógica
+  de promociones en los productos Samsung.
+*/
+private promotionService = inject(PromotionService);
 
   /*
     Constructor del componente.
@@ -457,4 +464,51 @@ export class Catalog implements OnInit {
       maximumFractionDigits: 0
     }).format(value);
   }
+
+  /*
+  Verifica si un producto tiene promoción activa.
+  Actualmente la promoción aplica solo para productos Samsung.
+*/
+hasPromotion(product: Product): boolean {
+  return this.promotionService.hasPromotion(product);
+}
+
+/*
+  Devuelve el texto promocional del producto.
+  Para Samsung devuelve: Incluye Buds4.
+*/
+getPromotionLabel(product: Product): string {
+  return this.promotionService.getPromotionLabel(product);
+}
+
+/*
+  Devuelve el porcentaje de descuento aplicado.
+  Para Samsung devuelve 15.
+*/
+getDiscountPercent(product: Product): number {
+  return this.promotionService.getDiscountPercent(product);
+}
+
+/*
+  Devuelve el precio original del producto,
+  es decir, el valor antes del descuento.
+*/
+getOriginalPrice(product: Product): number {
+  return this.promotionService.getOriginalPrice(product);
+}
+
+/*
+  Devuelve el precio final del producto.
+  Si es Samsung, aplica el descuento del 15%.
+*/
+getFinalPrice(product: Product): number {
+  return this.promotionService.getFinalPrice(product);
+}
+
+/*
+  Devuelve el valor ahorrado por el usuario.
+*/
+getSavings(product: Product): number {
+  return this.promotionService.getSavings(product);
+}
 }

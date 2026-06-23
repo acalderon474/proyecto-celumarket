@@ -38,6 +38,12 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
 /* 
+  Importa el servicio de promociones para aplicar
+  descuentos y etiquetas comerciales a productos Samsung.
+*/
+import { PromotionService } from '../../services/promotion.service';
+
+/* 
   Interfaz para representar visualmente cada marca destacada
   que se muestra en la página principal.
 */
@@ -169,18 +175,22 @@ export class Home implements OnInit {
   ];
 
   /* 
-    Constructor del componente.
-    Inyecta el servicio de productos y el identificador de plataforma.
+  Constructor del componente.
+  Inyecta:
+  - ProductService: para obtener productos destacados.
+  - PromotionService: para aplicar la promoción Samsung.
+  - PLATFORM_ID: para validar si se ejecuta en navegador.
+*/
+constructor(
+  private productService: ProductService,
+  private promotionService: PromotionService,
+  @Inject(PLATFORM_ID) private platformId: object
+) {
+  /* 
+    Determina si la ejecución se realiza en navegador.
   */
-  constructor(
-    private productService: ProductService,
-    @Inject(PLATFORM_ID) private platformId: object
-  ) {
-    /* 
-      Determina si la ejecución se realiza en navegador.
-    */
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+  this.isBrowser = isPlatformBrowser(this.platformId);
+}
 
   /* 
     Método del ciclo de vida que se ejecuta al iniciar el componente.
@@ -403,6 +413,62 @@ export class Home implements OnInit {
 
     return Number(price) || 0;
   }
+
+  /* 
+  Verifica si un producto tiene una promoción activa.
+  Actualmente la promoción aplica únicamente para celulares Samsung.
+*/
+hasPromotion(product: Product): boolean {
+  return this.promotionService.hasPromotion(product);
+}
+
+/* 
+  Devuelve el texto promocional del producto.
+  Para Samsung devuelve: Incluye Buds4.
+*/
+getPromotionLabel(product: Product): string {
+  return this.promotionService.getPromotionLabel(product);
+}
+
+/* 
+  Devuelve el porcentaje de descuento aplicado.
+  Para Samsung devuelve 15.
+*/
+getDiscountPercent(product: Product): number {
+  return this.promotionService.getDiscountPercent(product);
+}
+
+/* 
+  Devuelve el precio original del producto,
+  es decir, el valor antes de aplicar el descuento.
+*/
+getOriginalPrice(product: Product): number {
+  return this.getProductPrice(product);
+}
+
+/* 
+  Devuelve el precio final del producto.
+  Si el producto es Samsung, aplica el descuento configurado.
+  Si no tiene promoción, conserva el precio original.
+*/
+getFinalPrice(product: Product): number {
+  const originalPrice = this.getOriginalPrice(product);
+  const discountPercent = this.getDiscountPercent(product);
+
+  if (!this.hasPromotion(product)) {
+    return originalPrice;
+  }
+
+  return Math.round(originalPrice * (1 - discountPercent / 100));
+}
+
+/* 
+  Calcula el valor ahorrado por el usuario.
+  Para productos sin promoción, el ahorro será 0.
+*/
+getSavings(product: Product): number {
+  return this.getOriginalPrice(product) - this.getFinalPrice(product);
+}
 
   /* 
     Formatea un valor numérico al formato de moneda COP.
