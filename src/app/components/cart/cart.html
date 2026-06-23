@@ -29,7 +29,34 @@
                     <span class="brand">{{ item.product.brand }}</span>
                     <h2>{{ item.product.model }}</h2>
                     <p>{{ item.product.description }}</p>
-                    <strong>{{ item.product.price | currency:'COP':'symbol':'1.0-0' }}</strong>
+                    <!-- 
+                Bloque de precios del producto en carrito.
+                Si el producto tiene promoción, muestra precio anterior,
+                precio con descuento y ahorro por unidad.
+                -->
+                    @if (hasPromotion(item)) {
+                    <div class="cart-product-price-box">
+                        <span class="cart-promo-badge">
+                            {{ getPromotionLabel(item) }} · -{{ getDiscountPercent(item) }}%
+                        </span>
+
+                        <span class="cart-old-price">
+                            {{ getOriginalPrice(item) | currency:'COP':'symbol':'1.0-0' }}
+                        </span>
+
+                        <strong class="cart-current-price">
+                            {{ getFinalPrice(item) | currency:'COP':'symbol':'1.0-0' }}
+                        </strong>
+
+                        <span class="cart-saving">
+                            Ahorras {{ getSavings(item) | currency:'COP':'symbol':'1.0-0' }} por unidad
+                        </span>
+                    </div>
+                    } @else {
+                    <strong class="cart-current-price">
+                        {{ item.product.price | currency:'COP':'symbol':'1.0-0' }}
+                    </strong>
+                    }
                 </div>
 
                 <div class="quantity-control">
@@ -41,6 +68,12 @@
                 <div class="subtotal">
                     <span>Subtotal</span>
                     <strong>{{ getSubtotal(item) | currency:'COP':'symbol':'1.0-0' }}</strong>
+
+                    @if (hasPromotion(item)) {
+                    <small class="cart-total-saving">
+                        Ahorro total: {{ getItemTotalSavings(item) | currency:'COP':'symbol':'1.0-0' }}
+                    </small>
+                    }
                 </div>
 
                 <button type="button" class="remove-btn" (click)="removeItem(item.product.id)"

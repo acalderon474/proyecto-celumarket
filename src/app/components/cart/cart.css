@@ -266,3 +266,68 @@
         align-items: flex-start;
     }
 }
+
+/* =========================================================
+    PROMOCIÓN SAMSUNG EN CARRITO
+   ========================================================= */
+
+/*
+    Contenedor de precios promocionales dentro del carrito.
+*/
+.cart-product-price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+/*
+    Badge promocional para productos Samsung dentro del carrito.
+*/
+.cart-promo-badge {
+    width: fit-content;
+    border-radius: 999px;
+    background: #0f766e;
+    color: #ffffff;
+    padding: 0.22rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+/*
+    Precio original antes del descuento.
+*/
+.cart-old-price {
+    color: #6b7280;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+/*
+    Precio final con descuento.
+*/
+.cart-current-price {
+    color: #1d4ed8;
+    font-weight: 900;
+}
+
+/*
+    Texto de ahorro por unidad.
+*/
+.cart-saving {
+    color: #047857;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+/*
+    Texto de ahorro total por producto según cantidad.
+*/
+.cart-total-saving {
+    display: block;
+    margin-top: 4px;
+    color: #047857;
+    font-size: 0.75rem;
+    font-weight: 800;
+}

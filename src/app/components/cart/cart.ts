@@ -39,7 +39,7 @@ export class Cart {
   }
 
   getSubtotal(item: CartItem): number {
-    return item.product.price * item.quantity;
+  return this.cartService.getItemSubtotal(item);
   }
 
   getTotalItems(): number {
@@ -49,6 +49,55 @@ export class Cart {
   getTotalPrice(): number {
     return this.cartService.getTotalPrice();
   }
+
+  /*
+  Verifica si el producto tiene promoción activa.
+*/
+hasPromotion(item: CartItem): boolean {
+  return this.cartService.hasPromotion(item.product);
+}
+
+/*
+  Devuelve el texto promocional del producto.
+*/
+getPromotionLabel(item: CartItem): string {
+  return this.cartService.getPromotionLabel(item.product);
+}
+
+/*
+  Devuelve el porcentaje de descuento aplicado.
+*/
+getDiscountPercent(item: CartItem): number {
+  return this.cartService.getDiscountPercent(item.product);
+}
+
+/*
+  Devuelve el precio original del producto.
+*/
+getOriginalPrice(item: CartItem): number {
+  return this.cartService.getOriginalPrice(item.product);
+}
+
+/*
+  Devuelve el precio final del producto.
+*/
+getFinalPrice(item: CartItem): number {
+  return this.cartService.getFinalPrice(item.product);
+}
+
+/*
+  Devuelve el ahorro por unidad.
+*/
+getSavings(item: CartItem): number {
+  return this.cartService.getSavings(item.product);
+}
+
+/*
+  Devuelve el ahorro total del producto según la cantidad.
+*/
+getItemTotalSavings(item: CartItem): number {
+  return this.cartService.getItemTotalSavings(item);
+}
 
   completePurchase(): void {
     if (this.cartItems.length === 0) {
