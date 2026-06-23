@@ -6,6 +6,7 @@ import { take } from 'rxjs';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { PromotionService } from '../../services/promotion.service';
 
 /*
   Decorador del componente ProductDetail.
@@ -79,6 +80,12 @@ export class ProductDetail implements OnInit {
     al carrito de compras desde la vista de detalle.
   */
   private cartService = inject(CartService);
+
+  /*
+  Inyectamos PromotionService para aplicar la lógica
+  de promociones en productos Samsung.
+*/
+private promotionService = inject(PromotionService);
 
   /*
     Constructor del componente.
@@ -273,6 +280,54 @@ export class ProductDetail implements OnInit {
   /*
     Devuelve el precio formateado en COP.
   */
+
+    /*
+  Verifica si un producto tiene promoción activa.
+  Actualmente la promoción aplica solo para celulares Samsung.
+*/
+hasPromotion(product: Product): boolean {
+  return this.promotionService.hasPromotion(product);
+}
+
+/*
+  Devuelve el texto promocional del producto.
+  Para Samsung devuelve: Incluye Buds4.
+*/
+getPromotionLabel(product: Product): string {
+  return this.promotionService.getPromotionLabel(product);
+}
+
+/*
+  Devuelve el porcentaje de descuento aplicado.
+  Para Samsung devuelve 15.
+*/
+getDiscountPercent(product: Product): number {
+  return this.promotionService.getDiscountPercent(product);
+}
+
+/*
+  Devuelve el precio original del producto,
+  es decir, el valor antes del descuento.
+*/
+getOriginalPrice(product: Product): number {
+  return this.promotionService.getOriginalPrice(product);
+}
+
+/*
+  Devuelve el precio final del producto.
+  Si es Samsung, aplica el descuento del 15%.
+*/
+getFinalPrice(product: Product): number {
+  return this.promotionService.getFinalPrice(product);
+}
+
+/*
+  Devuelve el valor ahorrado por el usuario.
+*/
+getSavings(product: Product): number {
+  return this.promotionService.getSavings(product);
+}
+
   formatPrice(value: number): string {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',

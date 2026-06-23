@@ -631,3 +631,137 @@
     cursor: not-allowed;
     transform: none;
 }
+
+/* =========================================================
+    PROMOCIÓN SAMSUNG EN DETALLE DEL PRODUCTO
+   ========================================================= */
+
+/*
+  Badge promocional para productos Samsung.
+  Se muestra en la parte superior izquierda de la imagen principal.
+*/
+.product-detail-gallery__promo-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    background: #0f766e;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 0.34rem 0.75rem;
+    font-size: 0.74rem;
+    font-weight: 800;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22);
+}
+
+/*
+  Contenedor del precio cuando el producto tiene promoción.
+*/
+.product-detail-info__price-box {
+    margin-top: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+/*
+  Etiqueta visual del porcentaje de descuento.
+*/
+.product-detail-info__discount-label {
+    width: fit-content;
+    border-radius: 999px;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 0.2rem 0.62rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+/*
+  Precio original antes del descuento.
+  Se muestra tachado para evidenciar el valor anterior.
+*/
+.product-detail-info__old-price {
+    color: #6b7280;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
+/*
+  Precio final con descuento aplicado.
+*/
+.product-detail-info__price--discount {
+    margin: 0;
+    color: #1d4ed8;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+/*
+  Texto que muestra cuánto ahorra el usuario.
+*/
+.product-detail-info__saving {
+    color: #047857;
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+/* =========================================================
+    PROMOCIÓN SAMSUNG EN PRODUCTOS RELACIONADOS
+   ========================================================= */
+
+/*
+  Badge promocional para productos relacionados Samsung.
+*/
+.product-detail-related-card__promo-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: #0f766e;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 0.25rem 0.58rem;
+    font-size: 0.66rem;
+    font-weight: 800;
+    box-shadow: 0 6px 14px rgba(15, 118, 110, 0.22);
+}
+
+/*
+    Bloque de precios promocionales en productos relacionados.
+*/
+.product-detail-related-card__price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+/*
+    Precio original tachado en productos relacionados.
+*/
+.product-detail-related-card__old-price {
+    color: #6b7280;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+/*
+    Precio final con descuento en productos relacionados.
+*/
+.product-detail-related-card__price--discount {
+    margin: 0;
+    color: #1d4ed8;
+    font-size: 0.92rem;
+    font-weight: 900;
+}
+
+/*
+    Texto de ahorro en productos relacionados.
+*/
+.product-detail-related-card__saving {
+    color: #047857;
+    font-size: 0.72rem;
+    font-weight: 800;
+}

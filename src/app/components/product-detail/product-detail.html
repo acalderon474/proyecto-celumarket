@@ -13,9 +13,9 @@
     Se muestra mientras se consulta la información del producto.
   -->
   @if (loading()) {
-    <section class="product-detail-state">
-      <p>Cargando detalle del producto...</p>
-    </section>
+  <section class="product-detail-state">
+    <p>Cargando detalle del producto...</p>
+  </section>
   }
 
   <!-- 
@@ -24,12 +24,12 @@
     o si el producto no existe.
   -->
   @if (!loading() && errorMessage()) {
-    <section class="product-detail-state product-detail-state--error">
-      <h2>No fue posible mostrar el producto</h2>
-      <p>{{ errorMessage() }}</p>
+  <section class="product-detail-state product-detail-state--error">
+    <h2>No fue posible mostrar el producto</h2>
+    <p>{{ errorMessage() }}</p>
 
-      <a class="product-detail-state__button" routerLink="/catalog"> Volver al catálogo </a>
-    </section>
+    <a class="product-detail-state__button" routerLink="/catalog"> Volver al catálogo </a>
+  </section>
   }
 
   <!-- 
@@ -37,258 +37,289 @@
     Solo se renderiza cuando el producto se encuentra correctamente.
   -->
   @if (!loading() && !errorMessage() && product(); as currentProduct) {
-    <!-- 
+  <!-- 
       Enlace superior para regresar al catálogo.
     -->
-    <section class="product-detail-top">
-      <a class="product-detail-top__back" routerLink="/catalog"> ← Volver </a>
-    </section>
+  <section class="product-detail-top">
+    <a class="product-detail-top__back" routerLink="/catalog"> ← Volver </a>
+  </section>
 
-    <!-- 
+  <!-- 
       Bloque principal del detalle.
       En escritorio se divide en dos columnas:
       - imagen principal
       - información del producto
     -->
-    <section class="product-detail-main">
-      <!-- Columna visual del producto -->
-      <article class="product-detail-gallery">
-        <div class="product-detail-gallery__image-wrapper">
-          <!-- Badge con la marca -->
-          <span class="product-detail-gallery__badge">
-            {{ currentProduct.brand }}
-          </span>
+  <section class="product-detail-main">
+    <!-- Columna visual del producto -->
+    <article class="product-detail-gallery">
+      <div class="product-detail-gallery__image-wrapper">
+        <!-- Badge con la marca -->
+        <!-- 
+          Badge superior del producto.
+          Si el producto es Samsung, muestra la promoción "Incluye Buds4".
+          Para las demás marcas, conserva el badge normal con la marca.
+        -->
+        @if (hasPromotion(currentProduct)) {
+        <span class="product-detail-gallery__promo-badge">
+          {{ getPromotionLabel(currentProduct) }}
+        </span>
+        } @else {
+        <span class="product-detail-gallery__badge">
+          {{ currentProduct.brand }}
+        </span>
+        }
 
-          <!-- 
+        <!-- 
             Botón de favoritos.
             Permite guardar o quitar el producto actual.
           -->
-          <button
-            class="product-detail-gallery__favorite"
-            type="button"
-            [class.active]="isFavorite(currentProduct)"
-            (click)="toggleFavorite(currentProduct, $event)"
-            aria-label="Agregar o quitar de favoritos"
-            title="Favoritos"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
-            </svg>
-          </button>
+        <button class="product-detail-gallery__favorite" type="button" [class.active]="isFavorite(currentProduct)"
+          (click)="toggleFavorite(currentProduct, $event)" aria-label="Agregar o quitar de favoritos" title="Favoritos">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+          </svg>
+        </button>
 
-          <!-- Imagen principal -->
-          <img
-            class="product-detail-gallery__image"
-            [src]="currentProduct.image"
-            [alt]="getProductName(currentProduct)"
-          />
+        <!-- Imagen principal -->
+        <img class="product-detail-gallery__image" [src]="currentProduct.image"
+          [alt]="getProductName(currentProduct)" />
+      </div>
+    </article>
+
+    <!-- Columna de información -->
+    <article class="product-detail-info">
+      <!-- Marca -->
+      <p class="product-detail-info__brand">
+        {{ currentProduct.brand }}
+      </p>
+
+      <!-- Nombre del producto -->
+      <h1 class="product-detail-info__title">
+        {{ getProductName(currentProduct) }}
+      </h1>
+
+      <!-- Descripción -->
+      <p class="product-detail-info__description">
+        {{ currentProduct.description }}
+      </p>
+
+      <!-- Precio -->
+      <!-- 
+          Bloque de precio del producto.
+          Si tiene promoción, muestra:
+          - porcentaje de descuento
+          - precio anterior tachado
+          - precio actual con descuento
+          - valor ahorrado
+        -->
+      @if (hasPromotion(currentProduct)) {
+      <div class="product-detail-info__price-box">
+        <span class="product-detail-info__discount-label">
+          -{{ getDiscountPercent(currentProduct) }}%
+        </span>
+
+        <span class="product-detail-info__old-price">
+          {{ formatPrice(getOriginalPrice(currentProduct)) }}
+        </span>
+
+        <p class="product-detail-info__price product-detail-info__price--discount">
+          {{ formatPrice(getFinalPrice(currentProduct)) }}
+        </p>
+
+        <span class="product-detail-info__saving">
+          Ahorras {{ formatPrice(getSavings(currentProduct)) }}
+        </span>
+      </div>
+      } @else {
+      <p class="product-detail-info__price">
+        {{ formatPrice(currentProduct.price) }}
+      </p>
+      }
+
+      <!-- Stock -->
+      <p class="product-detail-info__stock" [class.product-detail-info__stock--out]="isOutOfStock(currentProduct)">
+        {{ getStockLabel(currentProduct) }}
+      </p>
+
+      <!-- Colores disponibles -->
+      <div class="product-detail-info__group">
+        <h2 class="product-detail-info__group-title">Colores disponibles</h2>
+
+        <div class="product-detail-info__chips">
+          @for (color of currentProduct.colors; track color) {
+          <span class="product-detail-info__chip">
+            {{ color }}
+          </span>
+          }
         </div>
-      </article>
+      </div>
 
-      <!-- Columna de información -->
-      <article class="product-detail-info">
-        <!-- Marca -->
-        <p class="product-detail-info__brand">
-          {{ currentProduct.brand }}
-        </p>
-
-        <!-- Nombre del producto -->
-        <h1 class="product-detail-info__title">
-          {{ getProductName(currentProduct) }}
-        </h1>
-
-        <!-- Descripción -->
-        <p class="product-detail-info__description">
-          {{ currentProduct.description }}
-        </p>
-
-        <!-- Precio -->
-        <p class="product-detail-info__price">
-          {{ formatPrice(currentProduct.price) }}
-        </p>
-
-        <!-- Stock -->
-        <p
-          class="product-detail-info__stock"
-          [class.product-detail-info__stock--out]="isOutOfStock(currentProduct)"
-        >
-          {{ getStockLabel(currentProduct) }}
-        </p>
-
-        <!-- Colores disponibles -->
-        <div class="product-detail-info__group">
-          <h2 class="product-detail-info__group-title">Colores disponibles</h2>
-
-          <div class="product-detail-info__chips">
-            @for (color of currentProduct.colors; track color) {
-              <span class="product-detail-info__chip">
-                {{ color }}
-              </span>
-            }
-          </div>
-        </div>
-
-        <!-- 
+      <!-- 
           Mensaje de confirmación del carrito.
           Se muestra cuando el usuario agrega el producto al carrito.
         -->
-        @if (cartMessage()) {
-          <div class="product-detail-info__cart-message" role="status">
-            {{ cartMessage() }}
-          </div>
-        }
+      @if (cartMessage()) {
+      <div class="product-detail-info__cart-message" role="status">
+        {{ cartMessage() }}
+      </div>
+      }
 
-        <!-- Acciones principales -->
-        <div class="product-detail-info__actions">
-          <button
-            class="product-detail-info__button product-detail-info__button--primary"
-            type="button"
-            (click)="toggleFavorite(currentProduct, $event)"
-          >
-            {{ isFavorite(currentProduct) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
-          </button>
+      <!-- Acciones principales -->
+      <div class="product-detail-info__actions">
+        <button class="product-detail-info__button product-detail-info__button--primary" type="button"
+          (click)="toggleFavorite(currentProduct, $event)">
+          {{ isFavorite(currentProduct) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
+        </button>
 
-          <button
-            class="product-detail-info__button product-detail-info__button--cart"
-            type="button"
-            [disabled]="isOutOfStock(currentProduct)"
-            (click)="addToCart(currentProduct, $event)"
-          >
-            Agregar al carrito
-          </button>
+        <button class="product-detail-info__button product-detail-info__button--cart" type="button"
+          [disabled]="isOutOfStock(currentProduct)" (click)="addToCart(currentProduct, $event)">
+          Agregar al carrito
+        </button>
 
-          <a
-            class="product-detail-info__button product-detail-info__button--secondary"
-            routerLink="/contact"
-          >
-            Solicitar información
-          </a>
-        </div>
-      </article>
-    </section>
+        <a class="product-detail-info__button product-detail-info__button--secondary" routerLink="/contact">
+          Solicitar información
+        </a>
+      </div>
+    </article>
+  </section>
 
-    <!-- 
+  <!-- 
       Sección de especificaciones técnicas.
       Organiza los datos importantes del celular en bloques.
     -->
-    <section class="product-detail-specs">
-      <div class="product-detail-specs__header">
-        <h2 class="product-detail-specs__title">Especificaciones Técnicas</h2>
-      </div>
+  <section class="product-detail-specs">
+    <div class="product-detail-specs__header">
+      <h2 class="product-detail-specs__title">Especificaciones Técnicas</h2>
+    </div>
 
-      <div class="product-detail-specs__grid">
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Pantalla</span>
-          <p class="product-detail-spec__value">{{ currentProduct.screen }}</p>
-        </article>
+    <div class="product-detail-specs__grid">
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Pantalla</span>
+        <p class="product-detail-spec__value">{{ currentProduct.screen }}</p>
+      </article>
 
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Procesador</span>
-          <p class="product-detail-spec__value">{{ currentProduct.processor }}</p>
-        </article>
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Procesador</span>
+        <p class="product-detail-spec__value">{{ currentProduct.processor }}</p>
+      </article>
 
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Memoria RAM</span>
-          <p class="product-detail-spec__value">{{ currentProduct.ram }}</p>
-        </article>
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Memoria RAM</span>
+        <p class="product-detail-spec__value">{{ currentProduct.ram }}</p>
+      </article>
 
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Almacenamiento</span>
-          <p class="product-detail-spec__value">{{ currentProduct.storage }}</p>
-        </article>
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Almacenamiento</span>
+        <p class="product-detail-spec__value">{{ currentProduct.storage }}</p>
+      </article>
 
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Cámara</span>
-          <p class="product-detail-spec__value">{{ currentProduct.camera }}</p>
-        </article>
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Cámara</span>
+        <p class="product-detail-spec__value">{{ currentProduct.camera }}</p>
+      </article>
 
-        <article class="product-detail-spec">
-          <span class="product-detail-spec__label">Batería</span>
-          <p class="product-detail-spec__value">{{ currentProduct.battery }}</p>
-        </article>
-      </div>
-    </section>
+      <article class="product-detail-spec">
+        <span class="product-detail-spec__label">Batería</span>
+        <p class="product-detail-spec__value">{{ currentProduct.battery }}</p>
+      </article>
+    </div>
+  </section>
 
-    <!-- 
+  <!-- 
       Productos relacionados.
       Se muestran celulares de la misma marca.
       En escritorio deben verse 4 cards por fila.
     -->
-    @if (relatedProducts().length > 0) {
-      <section class="product-detail-related">
-        <!-- Encabezado de la sección -->
-        <div class="product-detail-related__header">
-          <h2 class="product-detail-related__title">Más de {{ currentProduct.brand }}</h2>
+  @if (relatedProducts().length > 0) {
+  <section class="product-detail-related">
+    <!-- Encabezado de la sección -->
+    <div class="product-detail-related__header">
+      <h2 class="product-detail-related__title">Más de {{ currentProduct.brand }}</h2>
 
-          <a
-            class="product-detail-related__link"
-            [routerLink]="['/catalog']"
-            [queryParams]="{ brand: currentProduct.brand }"
-          >
-            Ver todos
-          </a>
-        </div>
+      <a class="product-detail-related__link" [routerLink]="['/catalog']"
+        [queryParams]="{ brand: currentProduct.brand }">
+        Ver todos
+      </a>
+    </div>
 
-        <!-- 
+    <!-- 
           Contenedor de cards relacionadas.
           Aquí usamos una grilla propia para asegurar 4 columnas
           y evitar que las cards vuelvan a ocupar toda la pantalla.
         -->
-        <div class="product-detail-related__grid">
-          @for (related of relatedProducts(); track related.id) {
-            <article class="product-detail-related-card">
-              <!-- Imagen del producto relacionado -->
-              <a
-                class="product-detail-related-card__image-wrapper"
-                [routerLink]="['/product', related.id]"
-              >
-                <span class="product-detail-related-card__badge">
-                  {{ related.brand }}
-                </span>
+    <div class="product-detail-related__grid">
+      @for (related of relatedProducts(); track related.id) {
+      <article class="product-detail-related-card">
+        <!-- Productos relacionados -->
+        <a class="product-detail-related-card__image-wrapper" [routerLink]="['/product', related.id]">
+          <!-- 
+            Badge del producto relacionado.
+            Si el relacionado es Samsung, muestra la promoción.
+          -->
+          @if (hasPromotion(related)) {
+          <span class="product-detail-related-card__promo-badge">
+            {{ getPromotionLabel(related) }}
+          </span>
+          } @else {
+          <span class="product-detail-related-card__badge">
+            {{ related.brand }}
+          </span>
+          }
 
-                <img
-                  class="product-detail-related-card__image"
-                  [src]="related.image"
-                  [alt]="getProductName(related)"
-                />
-              </a>
+          <img class="product-detail-related-card__image" [src]="related.image" [alt]="getProductName(related)" />
+        </a>
 
-              <!-- Cuerpo de la card -->
-              <div class="product-detail-related-card__body">
-                <h3 class="product-detail-related-card__title">
-                  {{ getProductName(related) }}
-                </h3>
+        <!-- Cuerpo de la card -->
+        <div class="product-detail-related-card__body">
+          <h3 class="product-detail-related-card__title">
+            {{ getProductName(related) }}
+          </h3>
 
-                <p class="product-detail-related-card__price">
-                  {{ formatPrice(related.price) }}
-                </p>
+                      <!-- 
+              Precio del producto relacionado.
+              Si tiene promoción, muestra el precio anterior,
+              el precio con descuento y el ahorro.
+            -->
+          @if (hasPromotion(related)) {
+          <div class="product-detail-related-card__price-box">
+            <span class="product-detail-related-card__old-price">
+              {{ formatPrice(getOriginalPrice(related)) }}
+            </span>
 
-                <!-- 
+            <p class="product-detail-related-card__price product-detail-related-card__price--discount">
+              {{ formatPrice(getFinalPrice(related)) }}
+            </p>
+
+            <span class="product-detail-related-card__saving">
+              Ahorras {{ formatPrice(getSavings(related)) }}
+            </span>
+          </div>
+          } @else {
+          <p class="product-detail-related-card__price">
+            {{ formatPrice(related.price) }}
+          </p>
+          }
+
+          <!-- 
                   Acciones para productos relacionados.
                   Permiten ver el detalle o agregar directamente al carrito.
                 -->
-                <div class="product-detail-related-card__actions">
-                  <a
-                    class="product-detail-related-card__button"
-                    [routerLink]="['/product', related.id]"
-                  >
-                    Ver más
-                  </a>
+          <div class="product-detail-related-card__actions">
+            <a class="product-detail-related-card__button" [routerLink]="['/product', related.id]">
+              Ver más
+            </a>
 
-                  <button
-                    class="product-detail-related-card__cart-button"
-                    type="button"
-                    [disabled]="isOutOfStock(related)"
-                    (click)="addToCart(related, $event)"
-                  >
-                    Agregar
-                  </button>
-                </div>
-              </div>
-            </article>
-          }
+            <button class="product-detail-related-card__cart-button" type="button" [disabled]="isOutOfStock(related)"
+              (click)="addToCart(related, $event)">
+              Agregar
+            </button>
+          </div>
         </div>
-      </section>
-    }
+      </article>
+      }
+    </div>
+  </section>
+  }
   }
 </main>
