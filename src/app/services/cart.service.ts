@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../models/product.model';
 import { CartItem } from '../models/cart-item.model';
+import { PromotionService } from './promotion.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,12 @@ export class CartService {
     private cartItemsSubject = new BehaviorSubject<CartItem[]>(this.getCartFromStorage());
     cartItems$ = this.cartItemsSubject.asObservable();
 
-    constructor() { }
+    /*
+    Constructor del servicio.
+    Inyecta PromotionService para calcular precios con descuento
+    dentro del carrito de compras.
+*/
+    constructor(private promotionService: PromotionService) { }
 
     addToCart(product: Product): void {
         const currentItems = this.cartItemsSubject.value;
@@ -74,12 +80,74 @@ export class CartService {
         );
     }
 
+    /*
+    Calcula el total general del carrito.
+    Si el producto tiene promoción, usa el precio final con descuento.
+*/
     getTotalPrice(): number {
         return this.cartItemsSubject.value.reduce(
-            (total, item) => total + item.product.price * item.quantity,
+            (total, item) => total + this.getItemSubtotal(item),
             0
         );
     }
+
+    /*
+    Verifica si un producto tiene promoción activa.
+*/
+hasPromotion(product: Product): boolean {
+    return this.promotionService.hasPromotion(product);
+}
+
+/*
+    Devuelve el texto promocional del producto.
+*/
+getPromotionLabel(product: Product): string {
+    return this.promotionService.getPromotionLabel(product);
+}
+
+/*
+    Devuelve el porcentaje de descuento aplicado.
+*/
+getDiscountPercent(product: Product): number {
+    return this.promotionService.getDiscountPercent(product);
+}
+
+/*
+    
+*/
+getOriginalPrice(product: Product): number {
+    return this.promotionService.getOriginalPrice(product);
+}
+
+/*
+    Devuelve el precio final del producto.
+    Para Samsung aplica el descuento del 15%.
+*/
+getFinalPrice(product: Product): number {
+    return this.promotionService.getFinalPrice(product);
+}
+
+/*
+    Devuelve el ahorro por unidad.
+*/
+getSavings(product: Product): number {
+    return this.promotionService.getSavings(product);
+}
+
+/*
+    Calcula el subtotal de un producto del carrito.
+    Usa el precio final, no el precio original.
+*/
+getItemSubtotal(item: CartItem): number {
+  return this.getFinalPrice(item.product) * item.quantity;
+}
+
+/*
+    Calcula el ahorro total de un producto según su cantidad.
+*/
+getItemTotalSavings(item: CartItem): number {
+  return this.getSavings(item.product) * item.quantity;
+}
 
     private updateCart(items: CartItem[]): void {
         this.cartItemsSubject.next(items);

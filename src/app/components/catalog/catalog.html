@@ -45,17 +45,9 @@
             Buscar producto
           </label>
 
-          <input
-            #searchInput
-            type="search"
-            id="search-catalog"
-            name="search"
-            class="catalog-search form-control"
-            placeholder="Buscar por marca, modelo o descripción..."
-            aria-label="Buscar productos"
-            [value]="searchTerm()"
-            (input)="setSearchTerm(searchInput.value)"
-          />
+          <input #searchInput type="search" id="search-catalog" name="search" class="catalog-search form-control"
+            placeholder="Buscar por marca, modelo o descripción..." aria-label="Buscar productos" [value]="searchTerm()"
+            (input)="setSearchTerm(searchInput.value)" />
         </div>
 
         <!-- Filtro por marca -->
@@ -64,29 +56,20 @@
             Filtrar por marca
           </label>
 
-          <select
-            #brandSelect
-            id="brand-filter"
-            class="catalog-select form-select"
-            [value]="selectedBrand()"
-            (change)="setSelectedBrand(brandSelect.value)"
-          >
+          <select #brandSelect id="brand-filter" class="catalog-select form-select" [value]="selectedBrand()"
+            (change)="setSelectedBrand(brandSelect.value)">
             <option value="">Todas las marcas</option>
 
             @for (brand of brands(); track brand) {
-              <option [value]="brand">
-                {{ brand }}
-              </option>
+            <option [value]="brand">
+              {{ brand }}
+            </option>
             }
           </select>
         </div>
 
         <!-- Botón para limpiar filtros -->
-        <button
-          type="button"
-          class="btn btn-outline-primary w-100 filters-catalog__clear"
-          (click)="clearFilters()"
-        >
+        <button type="button" class="btn btn-outline-primary w-100 filters-catalog__clear" (click)="clearFilters()">
           Limpiar filtros
         </button>
       </div>
@@ -115,181 +98,170 @@
         Se muestra cuando el usuario agrega un producto al carrito.
       -->
       @if (cartMessage()) {
-        <div class="catalog-cart-message" role="status">
-          {{ cartMessage() }}
-        </div>
+      <div class="catalog-cart-message" role="status">
+        {{ cartMessage() }}
+      </div>
       }
 
       <!-- Estado de carga -->
       @if (loading()) {
-        <div class="catalog-state">
-          <p>Cargando catálogo...</p>
-        </div>
+      <div class="catalog-state">
+        <p>Cargando catálogo...</p>
+      </div>
       }
 
       <!-- Estado de error -->
       @if (!loading() && errorMessage()) {
-        <div class="catalog-state catalog-state--error">
-          <p>{{ errorMessage() }}</p>
-        </div>
+      <div class="catalog-state catalog-state--error">
+        <p>{{ errorMessage() }}</p>
+      </div>
       }
 
       <!-- Estado sin resultados -->
       @if (!loading() && !errorMessage() && !hasFilteredProducts()) {
-        <div class="catalog-state">
-          <h3>No se encontraron productos</h3>
-          <p>
-            Intenta cambiar el texto de búsqueda o selecciona otra marca.
-          </p>
+      <div class="catalog-state">
+        <h3>No se encontraron productos</h3>
+        <p>
+          Intenta cambiar el texto de búsqueda o selecciona otra marca.
+        </p>
 
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="clearFilters()"
-          >
-            Restablecer filtros
-          </button>
-        </div>
+        <button type="button" class="btn btn-primary" (click)="clearFilters()">
+          Restablecer filtros
+        </button>
+      </div>
       }
 
       <!-- Estado con resultados -->
       @if (!loading() && !errorMessage() && hasFilteredProducts()) {
-        <div class="catalog-products-grid">
+      <div class="catalog-products-grid">
 
-          @for (product of paginatedProducts(); track product.id) {
-            <article class="catalog-product-card">
+        @for (product of paginatedProducts(); track product.id) {
+        <article class="catalog-product-card">
 
-              <!-- 
+          <!-- 
                 Área visual superior de la tarjeta.
                 Contiene badge, botón de favoritos e imagen.
               -->
-              <a
-                class="catalog-product-card__image-wrapper"
-                [routerLink]="['/product', product.id]"
-              >
-                <span class="catalog-product-card__badge">
-                  {{ product.brand }}
+          <a class="catalog-product-card__image-wrapper" [routerLink]="['/product', product.id]">
+            <!-- 
+            Badge promocional.
+            Si el producto es Samsung, muestra la promoción Incluye Buds4.
+            Para las demás marcas, mantiene el badge normal con la marca.
+          -->
+            @if (hasPromotion(product)) {
+            <span class="catalog-product-card__promo-badge">
+              {{ getPromotionLabel(product) }}
+            </span>
+            } @else {
+            <span class="catalog-product-card__badge">
+              {{ product.brand }}
+            </span>
+            }
+
+            <!-- Botón de favoritos -->
+            <button class="catalog-product-card__favorite" type="button" [class.active]="isFavorite(product)"
+              (click)="toggleFavorite(product, $event)" aria-label="Agregar o quitar de favoritos" title="Favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+              </svg>
+            </button>
+
+            <img class="catalog-product-card__image" [src]="product.image"
+              [alt]="product.brand + ' ' + product.model" />
+          </a>
+
+          <!-- Cuerpo de la tarjeta -->
+          <div class="catalog-product-card__body">
+
+            <p class="catalog-product-card__brand">
+              {{ product.brand }}
+            </p>
+
+            <h3 class="catalog-product-card__title">
+              {{ product.model }}
+            </h3>
+
+            <p class="catalog-product-card__description">
+              {{ product.description }}
+            </p>
+
+            <div class="catalog-product-card__footer">
+                            <!-- 
+                Bloque de precios.
+                Si el producto tiene promoción, se muestra:
+                - precio anterior tachado
+                - precio actual con descuento
+                - valor ahorrado
+              -->
+              @if (hasPromotion(product)) {
+              <div class="catalog-product-card__price-box">
+                <span class="catalog-product-card__discount-label">
+                  -{{ getDiscountPercent(product) }}%
                 </span>
 
-                <!-- Botón de favoritos -->
-                <button
-                  class="catalog-product-card__favorite"
-                  type="button"
-                  [class.active]="isFavorite(product)"
-                  (click)="toggleFavorite(product, $event)"
-                  aria-label="Agregar o quitar de favoritos"
-                  title="Favoritos"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
-                  </svg>
-                </button>
+                <span class="catalog-product-card__old-price">
+                  {{ formatPrice(getOriginalPrice(product)) }}
+                </span>
 
-                <img
-                  class="catalog-product-card__image"
-                  [src]="product.image"
-                  [alt]="product.brand + ' ' + product.model"
-                />
-              </a>
+                <span class="catalog-product-card__price catalog-product-card__price--discount">
+                  {{ formatPrice(getFinalPrice(product)) }}
+                </span>
 
-              <!-- Cuerpo de la tarjeta -->
-              <div class="catalog-product-card__body">
+                <span class="catalog-product-card__saving">
+                  Ahorras {{ formatPrice(getSavings(product)) }}
+                </span>
+              </div>
+              } @else {
+              <span class="catalog-product-card__price">
+                {{ formatPrice(product.price) }}
+              </span>
+              }
 
-                <p class="catalog-product-card__brand">
-                  {{ product.brand }}
-                </p>
-
-                <h3 class="catalog-product-card__title">
-                  {{ product.model }}
-                </h3>
-
-                <p class="catalog-product-card__description">
-                  {{ product.description }}
-                </p>
-
-                <div class="catalog-product-card__footer">
-                  <span class="catalog-product-card__price">
-                    {{ formatPrice(product.price) }}
-                  </span>
-
-                  <!-- 
+              <!-- 
                     Acciones del producto.
                     Permite ver el detalle o agregar el producto al carrito.
                   -->
-                  <div class="catalog-product-card__actions">
-                    <a
-                      class="catalog-product-card__button"
-                      [routerLink]="['/product', product.id]"
-                    >
-                      Ver más
-                    </a>
+              <div class="catalog-product-card__actions">
+                <a class="catalog-product-card__button" [routerLink]="['/product', product.id]">
+                  Ver más
+                </a>
 
-                    <button
-                      type="button"
-                      class="catalog-product-card__cart-button"
-                      (click)="addToCart(product, $event)"
-                    >
-                      Agregar al carrito
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-          }
-        </div>
-
-        <!-- Paginación -->
-        <nav
-          class="catalog-pagination-wrapper"
-          aria-label="Paginación del catálogo"
-        >
-          <ul class="pagination justify-content-center flex-wrap">
-
-            <li
-              class="page-item"
-              [class.disabled]="currentPage() === 1"
-            >
-              <button
-                type="button"
-                class="page-link"
-                [disabled]="currentPage() === 1"
-                (click)="previousPage()"
-              >
-                Anterior
-              </button>
-            </li>
-
-            @for (page of getPages(); track page) {
-              <li
-                class="page-item"
-                [class.active]="currentPage() === page"
-                [attr.aria-current]="currentPage() === page ? 'page' : null"
-              >
-                <button
-                  type="button"
-                  class="page-link"
-                  (click)="goToPage(page)"
-                >
-                  {{ page }}
+                <button type="button" class="catalog-product-card__cart-button" (click)="addToCart(product, $event)">
+                  Agregar al carrito
                 </button>
-              </li>
-            }
+              </div>
+            </div>
+          </div>
+        </article>
+        }
+      </div>
 
-            <li
-              class="page-item"
-              [class.disabled]="currentPage() === totalPages()"
-            >
-              <button
-                type="button"
-                class="page-link"
-                [disabled]="currentPage() === totalPages()"
-                (click)="nextPage()"
-              >
-                Siguiente
-              </button>
-            </li>
-          </ul>
-        </nav>
+      <!-- Paginación -->
+      <nav class="catalog-pagination-wrapper" aria-label="Paginación del catálogo">
+        <ul class="pagination justify-content-center flex-wrap">
+
+          <li class="page-item" [class.disabled]="currentPage() === 1">
+            <button type="button" class="page-link" [disabled]="currentPage() === 1" (click)="previousPage()">
+              Anterior
+            </button>
+          </li>
+
+          @for (page of getPages(); track page) {
+          <li class="page-item" [class.active]="currentPage() === page"
+            [attr.aria-current]="currentPage() === page ? 'page' : null">
+            <button type="button" class="page-link" (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          </li>
+          }
+
+          <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+            <button type="button" class="page-link" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+              Siguiente
+            </button>
+          </li>
+        </ul>
+      </nav>
       }
     </section>
   </section>
